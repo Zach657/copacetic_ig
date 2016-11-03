@@ -7,6 +7,11 @@ using System.Collections;
 
 public class MouseLook : MonoBehaviour {
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    
     public enum RotationAxes
     {
         MouseXandY = 0,
