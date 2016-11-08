@@ -1,4 +1,4 @@
-# Copacetic Games - internal project name: PEAK 17
+# Copacetic Games Co. - Noises
 
 ## Instructions:
 * You can move, I guess
@@ -9,7 +9,8 @@
 ## Known bugs:
 
 ## Credits:
-* No sneak peaks!
+* Material Design Icons - (C) Google
+* Unity Asset Store Assets - (C) Multiple Creators
 
 ## Website
 https://rawgit.com/pwages/copaceticgames/master/html/index.html

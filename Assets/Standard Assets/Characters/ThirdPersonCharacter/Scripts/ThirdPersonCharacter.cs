@@ -1,6 +1,10 @@
 using System;
 using UnityEngine;
 
+/** 
+ * Copyright (C) 2016 - Unity - Edited by Peter Wages
+ **/
+
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
 	[RequireComponent(typeof(Rigidbody))]
@@ -19,7 +23,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
-		public bool m_IsGrounded;
 		float m_OrigGroundCheckDistance;
 		const float k_Half = 0.5f;
 		float m_TurnAmount;
@@ -29,6 +32,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
+        public bool m_IsGrounded;
         public bool m_PlayJumpSound;
 
 

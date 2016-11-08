@@ -4,6 +4,10 @@ using UnityStandardAssets.Characters.FirstPerson;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 
+/** 
+ * Copyright (C) 2016 - Peter Wages & Unity
+ **/
+
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
     public class FootstepsAndJumping : MonoBehaviour
