@@ -11,6 +11,18 @@
 ## Credits:
 * Material Design Icons - (C) Google
 * Unity Asset Store Assets - (C) Multiple Creators
+* Standard Assets (C) Unity
+* Buildings
+* Campfire
+* Forest Grounds Texture Pack
+* Free Asset
+* FRMusic
+* Google Material Design
+* Horror Sfx
+* MORPH3D
+* Tree9
+* True_Horror
+* UITween
 
 ## Website
 https://rawgit.com/pwages/copaceticgames/master/html/index.html
