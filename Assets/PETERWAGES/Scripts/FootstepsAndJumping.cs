@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
-using UnityStandardAssets.CrossPlatformInput;
-using UnityStandardAssets.Utility;
+
+/** 
+ * Copyright (C) 2016 - Peter Wages & Unity
+ **/
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
     public class FootstepsAndJumping : MonoBehaviour
     {
-        [SerializeField]
         private float m_StepInterval;
+        private float crouchingStepInterval = 0.6f;
+        private float runningStepInterval = 0.3f;
         [SerializeField]
         private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField]
@@ -18,29 +20,36 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private AudioClip m_LandSound;           // the sound played when character touches back on ground.
         private AudioSource m_AudioSource;
         private bool m_IsGrounded;
+        private bool m_Crouching;
 
         // Peter Wages
-        private bool m_PlayJumpSound = false;
         private bool m_PlayLandingSound = false;
         private bool StepsPlaying = false;
+        private bool footstepsSpeedChange = false;
         private IEnumerator footStepsCoroutine;
-        private ThirdPersonCharacter thirdPersonChar;
+        private ThirdPersonCharacter playerController;
         // End Peter Wages
 
         void Start()
         {
             m_AudioSource = GetComponent<AudioSource>();
-            thirdPersonChar = this.GetComponent<ThirdPersonCharacter>();
+            playerController = this.GetComponent<ThirdPersonCharacter>();
         }
 
         // Peter Wages
         private void Update()
         {
-            m_IsGrounded = thirdPersonChar.m_IsGrounded;
-            if (!m_IsGrounded && thirdPersonChar.m_PlayJumpSound)
+            m_IsGrounded = playerController.m_IsGrounded;
+            bool previousState = m_Crouching;
+            m_Crouching = playerController.m_Crouching;
+            if (previousState != m_Crouching)
+            {
+                footstepsSpeedChange = true;
+            }
+            if (!m_IsGrounded && playerController.m_PlayJumpSound)
             {
                 PlayJumpSound();
-                thirdPersonChar.m_PlayJumpSound = false;
+                playerController.m_PlayJumpSound = false;
                 m_PlayLandingSound = true;
             }
             else if (m_IsGrounded && m_PlayLandingSound)
@@ -51,16 +60,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         }
 
         private void FixedUpdate()
-        {
-            if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && !StepsPlaying)
+        { 
+            if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && (!StepsPlaying && !footstepsSpeedChange))
             {
+                if (m_Crouching) m_StepInterval = crouchingStepInterval;
+                else m_StepInterval = runningStepInterval;
                 InvokeRepeating("PlayFootStepAudio", 0f, m_StepInterval);
                 StepsPlaying = true;
             }
-            else if (!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && StepsPlaying)
+            else if ((!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && StepsPlaying) || (footstepsSpeedChange && StepsPlaying))
             {
                 CancelInvoke("PlayFootStepAudio");
                 StepsPlaying = false;
+                footstepsSpeedChange = false;
             }
         }
         // Peter Wages
