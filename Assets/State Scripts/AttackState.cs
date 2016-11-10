@@ -1,0 +1,30 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class AttackState : State {
+	MoveCrawler moveCrawler;
+	Animator animator;
+	GameObject crawler;
+
+	public AttackState (MoveCrawler moveCrawler) {
+		this.moveCrawler = moveCrawler;
+		crawler = GameObject.FindGameObjectWithTag ("Crawler");
+		animator = crawler.GetComponent<Animator> ();
+	}
+
+	public void PlayerSeen(bool isSeen) {
+		
+	}
+
+	public void PlayerClose() {
+//		animator.Play ("attack");
+//		moveCrawler.SetState (moveCrawler.GetCrawlState ());
+	}
+
+	public void PerformAction() {
+		crawler.transform.position += crawler.transform.forward * 0.5f * Time.deltaTime;
+		animator.Play ("attack");
+		moveCrawler.SetState (moveCrawler.GetCrawlState());
+	}
+
+}
