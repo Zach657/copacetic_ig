@@ -6,6 +6,10 @@ public class DoorInteract : MonoBehaviour {
     [SerializeField] private float openAngle;
     [SerializeField] private float closeAngle;
     
+    //References to the open and close door sound clips
+    [SerializeField] private AudioClip open;
+    [SerializeField] private AudioClip close;
+    
     //A reference to the player object
     [SerializeField] private Transform playerTransform;
     
@@ -40,10 +44,12 @@ public class DoorInteract : MonoBehaviour {
             isMoving = true;
             if(isOpen){
                 targetAngle = closeAngle;
+                playCloseSound();
                 isOpen = false;
             }
             else{
                 targetAngle = openAngle;
+                playOpenSound();
                 isOpen = true;
             }
         }
@@ -64,17 +70,26 @@ public class DoorInteract : MonoBehaviour {
     
     //moves the door towards the desired angle in increments
     private void moveDoor(float angle){
-        if(Mathf.Abs(currentAngle-angle) < 2){
+        if(Mathf.Abs(currentAngle-angle) < 4){
             isMoving = false;
         }
         else if(angle < currentAngle){
-            this.transform.Rotate(0,-2,0);
-            currentAngle = currentAngle - 2;
+            this.transform.Rotate(0,-4,0);
+            currentAngle = currentAngle - 4;
         }
         else{
-            this.transform.Rotate(0,2,0);
-            currentAngle = currentAngle + 2;
+            this.transform.Rotate(0,4,0);
+            currentAngle = currentAngle + 4;
         }
+    }
+    
+    //plays door opening sound
+    private void playOpenSound(){
+        AudioSource.PlayClipAtPoint(open, this.transform.position);
+    }
+    //plays door closing sound
+    private void playCloseSound(){
+        AudioSource.PlayClipAtPoint(close, this.transform.position);
     }
 }
 
