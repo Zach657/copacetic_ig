@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
+/** 
+ * Copyright (C) 2016 - James Greenwell
+ **/
+
 public class BrainInteract : MonoBehaviour {
     
     //A reference to the game object 

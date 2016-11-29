@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
+/** 
+ * Copyright (C) 2016 - James Greenwell
+ **/
+
 public class DoorInteract : MonoBehaviour {
     //Sets the open and close angles for the given door
     [SerializeField] private float openAngle;
