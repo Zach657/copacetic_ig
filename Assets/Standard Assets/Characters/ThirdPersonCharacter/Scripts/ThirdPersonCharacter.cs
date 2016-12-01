@@ -131,7 +131,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 m_Capsule.center = m_Capsule.center / 2f;
                 m_Crouching = true;
 				//adjusts camera height for crouching - JAMES GREENWELL
-				mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);
+				if(!AIPlayer){mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);}
             }
             else
             {
@@ -141,14 +141,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 {
                     m_Crouching = true;
 					//adjusts camera height for crouching - JAMES GREENWELL
-					mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);
+					if(!AIPlayer){mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);}
                     return;
                 }
                 m_Capsule.height = m_CapsuleHeight;
                 m_Capsule.center = m_CapsuleCenter;
                 m_Crouching = false;
 				//adjusts camera height for standing - JAMES GREENWELL
-				mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, standHeight, mainCamTransform.localPosition.z);
+				if(!AIPlayer){mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, standHeight, mainCamTransform.localPosition.z);}
             }
         }
 
@@ -163,7 +163,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 {
                     m_Crouching = true;
 					//adjusts camera height for crouching - JAMES GREENWELL
-					mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);
+					if(!AIPlayer){mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);}
                 }
             }
         }
