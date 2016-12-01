@@ -29,10 +29,12 @@ public class NotebookInteract : MonoBehaviour {
 	void Update () {
 		if(playerIsNear() && Input.GetKeyDown("e")){
 			playSound();
-			notebookObject.GetComponent<Button>().enabled = true;
-			notebookObject.GetComponent<Text> ().color = new Color (255f, 255f, 255f, 255f);
-			Destroy(this.gameObject);
-		}
+            notebookObject.GetComponent<Button>().enabled = true;
+            Text notebookText = notebookObject.GetComponent<Text>();
+            string text = "*" + notebookText.text;
+            notebookText.text = text;
+            Destroy(this.gameObject);
+        }
 	}
 
 	//Plays a sound when the player collects the brain

@@ -8,7 +8,7 @@ using System.Collections;
 public class BrainInteract : MonoBehaviour {
     
     //A reference to the game object 
-	[SerializeField] private GameObject gameStatusController;
+	[SerializeField] private SceneController sceneController;
     
     //A reference to the player object
     [SerializeField] private Transform playerTransform;
@@ -31,7 +31,7 @@ public class BrainInteract : MonoBehaviour {
 	void Update () {
 	   if(playerIsNear() && Input.GetKeyDown("e")){
            playSound();
-           gameStatusController.SendMessage (updateBrainMessage);
+            sceneController.BrainCollected();
            Destroy(this.gameObject);
        }
 	}
