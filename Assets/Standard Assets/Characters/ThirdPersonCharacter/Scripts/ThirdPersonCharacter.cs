@@ -30,7 +30,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         [SerializeField]
         float m_AnimSpeedMultiplier = 1f;
         [SerializeField]
-        float m_GroundCheckDistance = 0.1f;
+        float m_GroundCheckDistance = 0.4f;
+		//James Greenwell
+		//Used to adjust camera height when appropriate
+		[SerializeField] private Transform mainCamTransform;
+		[SerializeField] private float crouchHeight;
+		[SerializeField] private float standHeight;
+		//James Greenwell
+
         // Peter Wages
         [SerializeField]
         bool AIPlayer = true;
@@ -40,7 +47,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         Rigidbody m_Rigidbody;
         Animator m_Animator;
         float m_OrigGroundCheckDistance;
-        const float k_Half = 0.5f;
+        const float k_Half = 0f; // this was the variable that caused the over sensitive crouching
         float m_TurnAmount;
         float m_ForwardAmount;
         Vector3 m_GroundNormal;
@@ -123,6 +130,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 m_Capsule.height = m_Capsule.height / 2f;
                 m_Capsule.center = m_Capsule.center / 2f;
                 m_Crouching = true;
+				//adjusts camera height for crouching - JAMES GREENWELL
+				if(!AIPlayer){mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);}
             }
             else
             {
@@ -131,11 +140,15 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                 {
                     m_Crouching = true;
+					//adjusts camera height for crouching - JAMES GREENWELL
+					if(!AIPlayer){mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);}
                     return;
                 }
                 m_Capsule.height = m_CapsuleHeight;
                 m_Capsule.center = m_CapsuleCenter;
                 m_Crouching = false;
+				//adjusts camera height for standing - JAMES GREENWELL
+				if(!AIPlayer){mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, standHeight, mainCamTransform.localPosition.z);}
             }
         }
 
@@ -149,6 +162,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                 {
                     m_Crouching = true;
+					//adjusts camera height for crouching - JAMES GREENWELL
+					if(!AIPlayer){mainCamTransform.localPosition = new Vector3 (mainCamTransform.localPosition.x, crouchHeight, mainCamTransform.localPosition.z);}
                 }
             }
         }
@@ -198,7 +213,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
             m_Rigidbody.AddForce(extraGravityForce);
 
-            m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+            m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 1f; //fixes sensitive ground detection
         }
 
 
@@ -214,7 +229,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 m_PlayJumpSound = true;
                 // END PETER WAGES
                 m_Animator.applyRootMotion = false;
-                m_GroundCheckDistance = 0.1f;
+                m_GroundCheckDistance = 0.1f;//fixes sensitive ground detection
             }
         }
 

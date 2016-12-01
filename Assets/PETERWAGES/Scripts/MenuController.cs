@@ -1,85 +1,50 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 
-public class MenuController : MonoBehaviour {
-    [SerializeField]
-    private bool inGameMenu;
-    [SerializeField]
-    private GameObject mainMenu;
-    [SerializeField]
-    private GameObject newGameButton;
-    [SerializeField]
-    private GameObject continueGameButton;
+/** 
+ * Copyright (C) 2016 - Peter Wages
+ **/
+
+public class MenuController : Controller {
+    public GameObject mainMenu;
     [SerializeField]
     private Slider volumeSlider;
     [SerializeField]
     private Slider brightnessSlider;
-    private Vector3 centerNewGameNoContinue = new Vector3(0f, 50f, 0f);
-    private bool gameInProgress = false;
+
+    [SerializeField]
+    private GameObject playerCharacter;
+
+    // Multiplier for whole number volume and brightness settings to float value
+    private float floatSettingsMultiplier = .1f;
+    // Multiplier for float number volume and brightness settings to whole number value
+    private float wholeNumberSettingsMultiplier = 10f;
+
+    // Currrent open menu
+    private GameObject currentOpenMenu;
+
+    // Camera objects
+    private Camera mainCamera;
+    private BlurOptimized blurEffectMainCamera;
+
+    // Player pref settings
+    private float brightnessLevel = 0.0f;
+    private float volumeLevel = .5f;
 
     // Time variables to allow pausing of game
     private float fixedDeltaTimeOriginal;
     private float timeScaleOriginal;
     private float pauseGameValue = 0.0f;
 
-    // Multiplier for whole number volume and brightness settings to float value
-    private float floatSettingsMultiplier = .1f;
-    // Multiplier for float number volume and brightness settings to whole number value
-    private float wholeNumberSettingsMultiplier = 10f;
-    
-    // Boolean for checking if in-game menu is closed
-    private bool menuClosed = true;
-
-    // Currrent open menu
-    private GameObject currentOpenMenu;
-
-    private Camera mainCamera;
-    private BlurOptimized blurEffectMainCamera;
-
-
-    // Player pref keys
-    private string keyBase = "CopaceticGamesCo-Noises-Game-";
-    private string gameInProgressKey;
-    private string brightnessLevelKey;
-    private string volumeLevelKey;
-
-    // Player pref settings
-    private float brightnessLevel = 0.0f;
-    private float volumeLevel = .5f;
-
-    // Menu shared setup
+    // Menu setup
     void Start()
     {
-        gameInProgressKey = keyBase + "GameInProgressKey";
-        brightnessLevelKey = keyBase + "BrightnessLevelKey";
-        volumeLevelKey = keyBase + "VolumeLevelKey";
         fixedDeltaTimeOriginal = Time.fixedDeltaTime;
         timeScaleOriginal = Time.timeScale;
         mainCamera = Camera.main;
         blurEffectMainCamera = mainCamera.GetComponent<BlurOptimized>();
-        Setup();
-    }
 
-    void Update()
-    {
-        // If not in the main menu, check for attempts to open/close in-game menu
-        if (inGameMenu)
-        {
-            OpenCloseInGameMenuOnEscapeKeyDown();
-        }
-    }
-
-    // Setups the menu screen and game settings
-    private void Setup()
-    {
-        // Setup for main menu only
-        if (!inGameMenu)
-        {
-            MainMenuSetupSpecifics();
-        }
         // Defaults brightness to 0%
         brightnessLevel = PlayerPrefs.GetFloat(brightnessLevelKey, brightnessLevel);
         brightnessSlider.value = brightnessLevel * wholeNumberSettingsMultiplier;
@@ -88,52 +53,24 @@ public class MenuController : MonoBehaviour {
         volumeSlider.value = volumeLevel * wholeNumberSettingsMultiplier;
     }
 
-    // Specific setups for main menu only
-    private void MainMenuSetupSpecifics()
-    {
-        // 1 is true, 0 is false, since PlayerPrefs does not support booleans natively
-        gameInProgress = PlayerPrefs.GetInt(gameInProgressKey, 0) == 1 ? true : false;
-        if (!gameInProgress)
-        {
-            newGameButton.GetComponent<RectTransform>().anchoredPosition3D = centerNewGameNoContinue;
-            Destroy(continueGameButton);
-        }
-    }
-
-    // Opens the in game menu on escape key press
-    private void OpenCloseInGameMenuOnEscapeKeyDown()
-    {
-        // On escape button press, pause or resume the game
-        if (Input.GetKeyDown(KeyCode.Escape) && menuClosed)
-        {
-            PauseGame();
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && !menuClosed)
-        {
-            ResumeGame();
-        }
-    }
-
     // Exit/Quit the game - Does not work in Unity Editor, works in builds only
     public void Quit()
     {
-        Application.Quit();
+        #if UNITY_EDITOR
+               UnityEditor.EditorApplication.isPlaying = false;
+        #else
+               Application.Quit();
+        #endif
     }
 
-    // Loads a specific scene
-    public void LoadGameScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
-
-    // Continues saved game
+    // Continues saved game / most recent player checkpoint
     public void ContinueSavedGame()
     {
-        // High target goal, may not be implemented
+        LoadGameScene(PlayerPrefs.GetString(savedGameSceneKey, currentScene));
     }
 
     // Activates submenu screen and hide main menu
-    public void SubMenuOpen(GameObject subMenu)
+    private void SubMenuOpen(GameObject subMenu)
     {
         subMenu.SetActive(true);
         mainMenu.SetActive(false);
@@ -141,7 +78,7 @@ public class MenuController : MonoBehaviour {
     }
 
     // Close submenu screen and show main menu
-    public void SubMenuClose(GameObject subMenu)
+    private void SubMenuClose(GameObject subMenu)
     {
         subMenu.SetActive(false);
         mainMenu.SetActive(true);
@@ -149,7 +86,7 @@ public class MenuController : MonoBehaviour {
     }
 
     // Change volume level
-    public void SetVolume(float level)
+    private void SetVolume(float level)
     {
         float adjustedLevel = level * floatSettingsMultiplier;
         AudioListener.volume = adjustedLevel;
@@ -157,11 +94,26 @@ public class MenuController : MonoBehaviour {
     }
 
     // Change brightness level
-    public void SetBrightness(float level)
+    private void SetBrightness(float level)
     {
         float adjustedLevel = level * floatSettingsMultiplier;
         RenderSettings.ambientLight = new Color(adjustedLevel, adjustedLevel, adjustedLevel);
         PlayerPrefs.SetFloat(brightnessLevelKey, adjustedLevel);
+    }
+
+    // Controls enabling/deactivating camera movement, blur effect, cursor visability
+    private void TogglePause(bool toggle)
+    {
+        SetCameraMovement(!toggle);
+        blurEffectMainCamera.enabled = toggle;
+        Cursor.visible = toggle;
+    }
+
+    // Disables mouse movement of player camera when menu is open for both the X-controller on the player character and the Y-controller on the main camera
+    private void SetCameraMovement(bool active)
+    {
+        playerCharacter.GetComponent<MouseLook>().enabled = active;
+        mainCamera.GetComponent<MouseLook>().enabled = active;
     }
 
     // Resumes the current game
@@ -170,8 +122,8 @@ public class MenuController : MonoBehaviour {
         currentOpenMenu.SetActive(false);
         Time.timeScale = timeScaleOriginal;
         Time.fixedDeltaTime = fixedDeltaTimeOriginal;
-        menuClosed = true;
-        blurEffectMainCamera.enabled = false;
+        TogglePause(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Pauses the current game
@@ -181,13 +133,8 @@ public class MenuController : MonoBehaviour {
         currentOpenMenu = mainMenu;
         Time.timeScale = pauseGameValue;
         Time.fixedDeltaTime = pauseGameValue;
-         menuClosed = false;
-        blurEffectMainCamera.enabled = true;
+        TogglePause(true);
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
-    // Saves the current game and allows it to be loadable when continue button in main menu is pressed
-    public void SaveGame()
-    {
-        // High target goal, may not be implemented
-    }
 }
