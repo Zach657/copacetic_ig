@@ -17,10 +17,7 @@ public class GameStatusController : MonoBehaviour {
 	//Used to update the inventory with the number of brains collected
 	[SerializeField] private GameObject inventoryBrainsCollectedObject;
 
-
-
-	//Sets the display time of each message
-	private int displayForMillis = 5000;
+	private int TOTALBRAINS = 10;
     
 	// Use this for initialization
 	void Start () {
@@ -42,6 +39,9 @@ public class GameStatusController : MonoBehaviour {
         else{
             numBrains = 1;
         }
+		if (numBrains == TOTALBRAINS) {
+			victory ();
+		}
         PlayerPrefs.SetInt(brainsCollectedKey, numBrains);
 
 		//Displays Memory to Screen
@@ -58,4 +58,8 @@ public class GameStatusController : MonoBehaviour {
 	public void notebookCollected(){
 		
     }
+	// Called when the player beats the level
+	private void victory(){
+		
+	}
 }
