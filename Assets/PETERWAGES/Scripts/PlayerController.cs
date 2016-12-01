@@ -24,7 +24,7 @@ public class PlayerController : Controller {
     {
         if (collision.gameObject.tag == "Enemy" && !timeToDie)
         {
-            sceneController.TriggerWin();
+            sceneController.TriggerDeath();
         }
     }
 }

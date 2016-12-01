@@ -50,7 +50,7 @@ public class Controller : MonoBehaviour {
     // Displays a notification at top of screen
     public void DisplayNotification(string message)
     {
-        notificationMessage.text = message;
+		notificationMessage.text = message;
         StartCoroutine(DisplayNotificationForLimitedTime());
     }
 
