@@ -9,7 +9,8 @@ public class MouseLook : MonoBehaviour {
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
     
     public enum RotationAxes

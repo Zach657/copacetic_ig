@@ -40,7 +40,6 @@ public class MenuController : Controller {
     // Menu setup
     void Start()
     {
-        Time.timeScale = 1;
         fixedDeltaTimeOriginal = Time.fixedDeltaTime;
         timeScaleOriginal = Time.timeScale;
         mainCamera = Camera.main;

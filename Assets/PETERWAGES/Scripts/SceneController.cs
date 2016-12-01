@@ -20,14 +20,17 @@ public class SceneController : Controller {
         SaveGame();
 	}
 
+    // Triggers death
     public void TriggerDeath()
     {
         playerAlive = false;
         deceasedController.PauseGame();
     }
 
+    // Trigger player win
     public void TriggerWin()
     {
         finishController.PauseGame();
+        PlayerPrefs.SetInt(gameInProgressKey, intFalse);
     }
 }

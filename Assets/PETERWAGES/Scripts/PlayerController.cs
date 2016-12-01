@@ -19,11 +19,12 @@ public class PlayerController : Controller {
 	
 	}
 
+    // On hitting an enemy, player dies
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy" && !timeToDie)
         {
-            sceneController.TriggerDeath();
+            sceneController.TriggerWin();
         }
     }
 }

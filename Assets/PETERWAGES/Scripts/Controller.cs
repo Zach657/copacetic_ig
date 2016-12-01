@@ -23,7 +23,7 @@ public class Controller : MonoBehaviour {
     // Scene information
     public static string currentScene;
     public Text notificationMessage;
-    public GameObject notificationWindow;
+    public GameObject notificationWindowSystem;
 
     [HideInInspector]
     public static bool playerAlive = true;
@@ -57,10 +57,10 @@ public class Controller : MonoBehaviour {
     // Fadesthe notification in and then fades it out
     IEnumerator DisplayNotificationForLimitedTime()
     {
-        notificationWindow.GetComponent<Image>().CrossFadeAlpha(visibleBackgroundAlpha, fadeDuration, false);
+        notificationWindowSystem.GetComponent<Image>().CrossFadeAlpha(visibleBackgroundAlpha, fadeDuration, false);
         notificationMessage.CrossFadeAlpha(visibleAlpha, fadeDuration, false);
         yield return new WaitForSeconds(5);
-        notificationWindow.GetComponent<Image>().CrossFadeAlpha(invisibleAlpha, fadeDuration, false);
+        notificationWindowSystem.GetComponent<Image>().CrossFadeAlpha(invisibleAlpha, fadeDuration, false);
         notificationMessage.CrossFadeAlpha(invisibleAlpha, fadeDuration, false);
     }
 
