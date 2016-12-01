@@ -9,8 +9,11 @@ using UnityEngine.UI;
 public class NotebookCollection : MonoBehaviour {
 
 	public void unlockNotebook(int id){
-		Component notebookObject = this.gameObject.GetComponent ("Notebook" + id);
-		notebookObject.GetComponent<Button>().enabled = true;
-		notebookObject.GetComponent<Text> ().color = new Color (255f, 255f, 255f, 255f);
-	}
+	    Component notebookObject = this.gameObject.GetComponent ("Notebook" + id);
+        notebookObject.GetComponent<Button>().enabled = true;
+        Text notebookText = notebookObject.GetComponent<Text>();
+        string text = "*" + notebookText.text;
+        notebookText.text = text;
+
+    }
 }

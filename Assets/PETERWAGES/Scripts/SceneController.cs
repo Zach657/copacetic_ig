@@ -29,8 +29,8 @@ public class SceneController : Controller {
 
 		PlayerPrefs.SetInt (brainsCollectedKey, 0);
 		//Adds memory messages to message List
-		message.Add("My… my name … my name is Killian.");
-		message.Add("I have a family… a … a wife and two kids. Where are they?");
+		message.Add("My… my name … my name is Killian?");
+		message.Add("I have a family… L-Landry?... and a …  and a kid... Ronan! Where are they?");
 		message.Add("There was an accident I think … Jesus, my head is killing me. Where the hell am I!?");
 		message.Add("I remember now.  I was in the car and then … then what?");
 		message.Add("Someone’s in the road. Someones in the road and they aren’t moving they’re just standing there. Move! I can’t stop! The car’s not stopping!");
@@ -48,32 +48,27 @@ public class SceneController : Controller {
 	}
 
 	// Called when the player collects a brain
-	public void brainCollected(){
-		int numBrains = PlayerPrefs.GetInt(brainsCollectedKey);
-		if(numBrains != null){
+	public void BrainCollected(){
+		int numBrains = PlayerPrefs.GetInt(brainsCollectedKey, 0);
 			numBrains = numBrains + 1;
-		}
-		else{
-			numBrains = 1;
-		}
-		if (numBrains == TOTALBRAINS) {
+		if (numBrains >= TOTALBRAINS) {
 			TriggerWin ();
 		}
 		PlayerPrefs.SetInt(brainsCollectedKey, numBrains);
 
 		//Displays Memory to Screen
-		recallMemory(numBrains);
+		RecallMemory(numBrains);
 
 	}
 
 	//Displays a player memory to the screen upon brain collection
-	private void recallMemory(int memNum){
+	private void RecallMemory(int memNum){
 		//headsUpDisplay.enabled = true;
 		DisplayNotification (message[memNum-1]);
 	}
 
 	// Called when the player collects a notebook
-	public void notebookCollected(){
+	public void NotebookCollected(){
 
 	}
 
