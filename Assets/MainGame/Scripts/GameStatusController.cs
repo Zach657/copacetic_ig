@@ -14,8 +14,10 @@ public class GameStatusController : MonoBehaviour {
 	//Used to notify user of various occurences
 	[SerializeField] private GameObject headsUpDisplay;
 
-	//Used to allow access to collected journals through player inventory
-	[SerializeField] private GameObject inventoryObject;
+	//Used to update the inventory with the number of brains collected
+	[SerializeField] private GameObject inventoryBrainsCollectedObject;
+
+
 
 	//Sets the display time of each message
 	private int displayForMillis = 5000;
@@ -41,8 +43,10 @@ public class GameStatusController : MonoBehaviour {
             numBrains = 1;
         }
         PlayerPrefs.SetInt(brainsCollectedKey, numBrains);
+
 		//Displays Memory to Screen
         recallMemory(numBrains);
+
     }
     
     //Displays a player memory to the screen upon brain collection
@@ -51,7 +55,7 @@ public class GameStatusController : MonoBehaviour {
     }
     
     // Called when the player collects a notebook
-	public void notebookCollected(int notebookNum){
+	public void notebookCollected(){
 		
     }
 }

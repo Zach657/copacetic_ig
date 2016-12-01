@@ -30,7 +30,7 @@ public class NotebookInteract : MonoBehaviour {
 		if(playerIsNear() && Input.GetKeyDown("e")){
 			playSound();
 			notebookObject.GetComponent<Button>().enabled = true;
-			notebookObject.GetComponent<Text> ().color = new Color (0f, 255f, 0f, 255f);
+			notebookObject.GetComponent<Text> ().color = new Color (255f, 255f, 255f, 255f);
 			Destroy(this.gameObject);
 		}
 	}
