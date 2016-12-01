@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 /** 
  * Copyright (C) 2016 - Peter Wages
@@ -8,8 +9,6 @@ using System.Collections;
 public class SceneController : Controller {
 
     [SerializeField]
-    private string thisScene;
-    [SerializeField]
     private MenuController deceasedController;
     [SerializeField]
     private MenuController finishController;
@@ -17,7 +16,7 @@ public class SceneController : Controller {
     // Use this for initialization
     void Start () {
         // At the start of each scene, save the checkpoint
-        currentScene = thisScene;
+        currentScene = SceneManager.GetActiveScene().name;
         SaveGame();
 	}
 
