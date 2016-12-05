@@ -14,7 +14,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public ThirdPersonCharacter character { get; private set; } // the character we are controlling
         public Transform target; // target to aim for
 
-		private const float TARGETUPDATETIMER = 1000;
+		private const float TARGETUPDATETIMER = 2000;
 
 		private float timeSinceUpdate = 0;
 
@@ -45,7 +45,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			else {
 				character.Move (Vector3.zero, false, false);
 			}
-			timeSinceUpdate = timeSinceUpdate + Time.deltaTime;
+			timeSinceUpdate = timeSinceUpdate + (Time.deltaTime*1000);
         }
 
 
