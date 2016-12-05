@@ -22,7 +22,13 @@ public class DoorInteract : MonoBehaviour {
     
     //boolean for whether or not the door is open
     [SerializeField] private bool isOpen;
-    
+
+    // Peter Wages
+    //boolean for whether or not the door is locked
+    [SerializeField]
+    private bool isLocked;
+    // Peter Wages
+
     //boolean for whether or not the door is moving
     private bool isMoving;
     
@@ -44,7 +50,7 @@ public class DoorInteract : MonoBehaviour {
     }
     
     void FixedUpdate(){
-        if(playerIsNear() && Input.GetKeyDown("e") && !isMoving){
+        if(playerIsNear() && Input.GetKeyDown("e") && !isMoving && !isLocked){
             isMoving = true;
             if(isOpen){
                 targetAngle = closeAngle;
@@ -57,8 +63,11 @@ public class DoorInteract : MonoBehaviour {
                 isOpen = true;
             }
         }
-        else if(isMoving){
+        else if(isMoving && !isLocked){
             moveDoor(targetAngle);
+        } else if (!isLocked)
+        {
+
         }
     }
    
