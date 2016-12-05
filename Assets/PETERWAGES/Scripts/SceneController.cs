@@ -21,6 +21,10 @@ public class SceneController : Controller {
 
 	private List<string> message = new List<string>();
 
+    // Time variables to allow pausing of game
+    public static float timeScaleOriginal = 1;
+
+
     // Use this for initialization
     void Start () {
         // At the start of each scene, save the checkpoint
@@ -41,7 +45,7 @@ public class SceneController : Controller {
 		message.Add("I won’t let him keep me here. I can feel my heartbeat. I’m not ready.");
 
 	}
-		
+
 	// Update is called once per frame
 	void Update () {
 

@@ -54,7 +54,7 @@ public class Controller : MonoBehaviour {
         StartCoroutine(DisplayNotificationForLimitedTime());
     }
 
-    // Fadesthe notification in and then fades it out
+    // Fades the notification in and then fades it out
     IEnumerator DisplayNotificationForLimitedTime()
     {
         notificationWindowSystem.GetComponent<Image>().CrossFadeAlpha(visibleBackgroundAlpha, fadeDuration, false);
@@ -67,6 +67,10 @@ public class Controller : MonoBehaviour {
     // Plays audio clip at a location
     public void PlaySoundAtPoint(AudioClip audio, Vector3 location)
     {
+        if (location == null)
+        {
+            location = GameObject.Find("PlayerCharacter").transform.position;
+        }
         AudioSource.PlayClipAtPoint(audio, location);
     }
 }

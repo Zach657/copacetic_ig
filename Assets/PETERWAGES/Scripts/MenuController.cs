@@ -6,7 +6,7 @@ using UnityStandardAssets.ImageEffects;
  * Copyright (C) 2016 - Peter Wages
  **/
 
-public class MenuController : Controller {
+public class MenuController : SceneController {
     public GameObject mainMenu;
     [SerializeField]
     private Slider volumeSlider;
@@ -33,15 +33,11 @@ public class MenuController : Controller {
     private float volumeLevel = .5f;
 
     // Time variables to allow pausing of game
-    private float fixedDeltaTimeOriginal;
-    private float timeScaleOriginal;
     private float pauseGameValue = 0.0f;
 
     // Menu setup
     void Start()
     {
-        fixedDeltaTimeOriginal = Time.fixedDeltaTime;
-        timeScaleOriginal = Time.timeScale;
         mainCamera = Camera.main;
         blurEffectMainCamera = mainCamera.GetComponent<BlurOptimized>();
 
@@ -51,6 +47,8 @@ public class MenuController : Controller {
         // Defaults volume to 50%
         volumeLevel = PlayerPrefs.GetFloat(volumeLevelKey, volumeLevel);
         volumeSlider.value = volumeLevel * wholeNumberSettingsMultiplier;
+
+        Time.timeScale = timeScaleOriginal;
     }
 
     // Exit/Quit the game - Does not work in Unity Editor, works in builds only
@@ -121,7 +119,6 @@ public class MenuController : Controller {
     {
         currentOpenMenu.SetActive(false);
         Time.timeScale = timeScaleOriginal;
-        Time.fixedDeltaTime = fixedDeltaTimeOriginal;
         TogglePause(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -132,7 +129,6 @@ public class MenuController : Controller {
         mainMenu.SetActive(true);
         currentOpenMenu = mainMenu;
         Time.timeScale = pauseGameValue;
-        Time.fixedDeltaTime = pauseGameValue;
         TogglePause(true);
         Cursor.lockState = CursorLockMode.Confined;
     }
