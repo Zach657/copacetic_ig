@@ -4,8 +4,10 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-public class NumpadEntryController : SceneController {
+public class NumpadEntryController : MenuController {
 
+    [SerializeField]
+    private GameObject numpadObject;
     [SerializeField]
     private Text numpadEntryTextField;
     private List<string> numbers = new List<string>();
@@ -16,6 +18,8 @@ public class NumpadEntryController : SceneController {
 
     private string currentAnswer;
     private const string ANSWER = "0 2 1 5 1 9 9 6";
+
+    public GameObject thisUnlockable;
 
     // Use this for initialization
     void Start() {
@@ -59,6 +63,8 @@ public class NumpadEntryController : SceneController {
         if (currentAnswer.Contains(ANSWER))
         {
             Debug.Log("CORRECT");
+            thisUnlockable.GetComponent<UnlockableObject>().Unlock();
+            ResumeGame();
         }
         else {
             Debug.Log("INCORRECT");

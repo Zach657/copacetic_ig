@@ -2,12 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.ImageEffects;
 
 /** 
  * Copyright (C) 2016 - Peter Wages
  **/
 
 public class SceneController : Controller {
+
+    public static GameObject playerCharacter;
+    // Camera objects
+    public static Camera mainCamera;
+    public static BlurOptimized blurEffectMainCamera;
 
     [SerializeField]
     private MenuController deceasedController;
@@ -31,7 +37,11 @@ public class SceneController : Controller {
         currentScene = SceneManager.GetActiveScene().name;
         SaveGame();
 
-		PlayerPrefs.SetInt (brainsCollectedKey, 0);
+        playerCharacter = GameObject.Find("PlayerCharacter");
+        mainCamera = Camera.main;
+        blurEffectMainCamera = mainCamera.GetComponent<BlurOptimized>();
+
+        PlayerPrefs.SetInt (brainsCollectedKey, 0);
 		//Adds memory messages to message List
 		message.Add("My… my name … my name is Killian?");
 		message.Add("I have a family… L-Landry?... and a …  and a kid... Ronan! Where are they?");
@@ -80,13 +90,13 @@ public class SceneController : Controller {
     public void TriggerDeath()
     {
         playerAlive = false;
-        deceasedController.PauseGame();
+        deceasedController.PauseGame(null);
     }
 
     // Trigger player win
     public void TriggerWin()
     {
-        winController.PauseGame();
+        winController.PauseGame(null);
         PlayerPrefs.SetInt(gameInProgressKey, intFalse);
     }
 }

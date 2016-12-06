@@ -13,8 +13,7 @@ public class MenuController : SceneController {
     [SerializeField]
     private Slider brightnessSlider;
 
-    [SerializeField]
-    private GameObject playerCharacter;
+ 
 
     // Multiplier for whole number volume and brightness settings to float value
     private float floatSettingsMultiplier = .1f;
@@ -22,11 +21,9 @@ public class MenuController : SceneController {
     private float wholeNumberSettingsMultiplier = 10f;
 
     // Currrent open menu
-    private GameObject currentOpenMenu;
-
-    // Camera objects
-    private Camera mainCamera;
-    private BlurOptimized blurEffectMainCamera;
+    private static GameObject currentOpenMenu;
+    // Boolean for checking if in-game menu is closed
+    public static bool menuClosed = true;
 
     // Player pref settings
     private float brightnessLevel = 0.0f;
@@ -38,9 +35,6 @@ public class MenuController : SceneController {
     // Menu setup
     void Start()
     {
-        mainCamera = Camera.main;
-        blurEffectMainCamera = mainCamera.GetComponent<BlurOptimized>();
-
         // Defaults brightness to 0%
         brightnessLevel = PlayerPrefs.GetFloat(brightnessLevelKey, brightnessLevel);
         brightnessSlider.value = brightnessLevel * wholeNumberSettingsMultiplier;
@@ -121,16 +115,22 @@ public class MenuController : SceneController {
         Time.timeScale = timeScaleOriginal;
         TogglePause(false);
         Cursor.lockState = CursorLockMode.Locked;
+        menuClosed = true;
     }
 
     // Pauses the current game
-    public void PauseGame()
+    public void PauseGame(GameObject menuToOpen)
     {
-        mainMenu.SetActive(true);
-        currentOpenMenu = mainMenu;
+        if (!menuToOpen)
+        { 
+            menuToOpen = mainMenu;
+        }
+        menuToOpen.SetActive(true);
+        currentOpenMenu = menuToOpen;
         Time.timeScale = pauseGameValue;
         TogglePause(true);
         Cursor.lockState = CursorLockMode.Confined;
+        menuClosed = false;
     }
 
 }

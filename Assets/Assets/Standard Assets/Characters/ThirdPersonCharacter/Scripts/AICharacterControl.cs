@@ -35,7 +35,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         {
 			//Slight edits made to fix the AI while player is moving a lot
 			if (timeSinceUpdate > TARGETUPDATETIMER) {
-				Debug.Log ("hit");
+				//Debug.Log ("hit");
 				timeSinceUpdate = 0;
 				agent.SetDestination (target.position);
 			}

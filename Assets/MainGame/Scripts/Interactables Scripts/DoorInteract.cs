@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 /** 
- * Copyright (C) 2016 - James Greenwell
+ * Copyright (C) 2016 - James Greenwell & Peter Wages
  **/
-
-public class DoorInteract : MonoBehaviour {
+ // All James Greenwell, except where noted
+public class DoorInteract : MonoBehaviour, UnlockableObject {
     //Sets the open and close angles for the given door
     [SerializeField] private float openAngle;
     [SerializeField] private float closeAngle;
@@ -24,6 +25,10 @@ public class DoorInteract : MonoBehaviour {
     [SerializeField] private bool isOpen;
 
     // Peter Wages
+    [SerializeField]
+    private MenuController menuController;
+    [SerializeField]
+    private GameObject keypad;
     //boolean for whether or not the door is locked
     [SerializeField]
     private bool isLocked;
@@ -39,6 +44,7 @@ public class DoorInteract : MonoBehaviour {
     private float currentAngle;
     
     void Start(){
+        menuController = GameObject.FindObjectOfType<InGameMenuController>();
         isMoving = false;
         if(isOpen){
             currentAngle = openAngle;
@@ -50,24 +56,37 @@ public class DoorInteract : MonoBehaviour {
     }
     
     void FixedUpdate(){
-        if(playerIsNear() && Input.GetKeyDown("e") && !isMoving && !isLocked){
-            isMoving = true;
-            if(isOpen){
-                targetAngle = closeAngle;
-                playCloseSound();
-                isOpen = false;
+        if (playerIsNear() && Input.GetKeyDown("e") && !isMoving)
+        {
+            if (isLocked)
+            // Peter Wages
+            {
+                Debug.Log("Locked");
+                menuController.PauseGame(keypad);
+                GameObject.FindObjectOfType<NumpadEntryController>().thisUnlockable = this.gameObject;
+                // Peter Wages
             }
-            else{
-                targetAngle = openAngle;
-                playOpenSound();
-                isOpen = true;
+            else
+            {
+
+                isMoving = true;
+                if (isOpen)
+                {
+                    targetAngle = closeAngle;
+                    playCloseSound();
+                    isOpen = false;
+                }
+                else
+                {
+                    targetAngle = openAngle;
+                    playOpenSound();
+                    isOpen = true;
+                }
             }
         }
-        else if(isMoving && !isLocked){
-            moveDoor(targetAngle);
-        } else if (!isLocked)
+        else if (isMoving && !isLocked)
         {
-
+            moveDoor(targetAngle);
         }
     }
    
@@ -104,5 +123,13 @@ public class DoorInteract : MonoBehaviour {
     private void playCloseSound(){
         AudioSource.PlayClipAtPoint(close, this.transform.position);
     }
+
+    //Peter Wages
+    // Unlocks the door
+    public void Unlock()
+    {
+        isLocked = false;
+    }
+    // Peter Wages
 }
 
