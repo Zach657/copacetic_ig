@@ -13,18 +13,11 @@ public class NumpadEntryController : MenuController {
     private List<string> numbers = new List<string>();
     private List<string> resetList;
 
-    private int numberOfNumbersToEnter = 8;
+    public static Puzzle currentPuzzle;
     private int currentIndex = 0;
-
     private string currentAnswer;
-    private const string ANSWER = "0 2 1 5 1 9 9 6";
 
     public GameObject thisUnlockable;
-
-    // Use this for initialization
-    void Start() {
-        IntizializeAnswerString();
-	}
 
     private void printString(List<string> list)
     {
@@ -37,10 +30,10 @@ public class NumpadEntryController : MenuController {
         numpadEntryTextField.text = printable;
     }
 
-    private void IntizializeAnswerString()
+    public void IntizializeAnswerString()
     {
         numbers.Clear();
-        for (int i = 0; i < numberOfNumbersToEnter; i++)
+        for (int i = 0; i < currentPuzzle.numberOfNumbersToEnter; i++)
         {
             numbers.Add("_ ");
         }
@@ -52,7 +45,7 @@ public class NumpadEntryController : MenuController {
     {
         currentIndex = button.Clicked(numbers, currentIndex);
         printString(numbers);
-        if (currentIndex >= numberOfNumbersToEnter)
+        if (currentIndex >= currentPuzzle.numberOfNumbersToEnter)
         {
             ButtonSubmit();
         }
@@ -60,11 +53,11 @@ public class NumpadEntryController : MenuController {
 
     public void ButtonSubmit()
     {
-        if (currentAnswer.Contains(ANSWER))
+        if (currentAnswer.Contains(currentPuzzle.answer))
         {
             Debug.Log("CORRECT");
-            thisUnlockable.GetComponent<UnlockableObject>().Unlock();
             ResumeGame();
+            thisUnlockable.GetComponent<UnlockableObject>().Unlock();
         }
         else {
             Debug.Log("INCORRECT");

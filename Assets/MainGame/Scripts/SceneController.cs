@@ -11,6 +11,7 @@ using UnityStandardAssets.ImageEffects;
 public class SceneController : Controller {
 
     public static GameObject playerCharacter;
+    public static NumpadEntryController numpadController;
     // Camera objects
     public static Camera mainCamera;
     public static BlurOptimized blurEffectMainCamera;
@@ -38,6 +39,7 @@ public class SceneController : Controller {
         SaveGame();
 
         playerCharacter = GameObject.Find("PlayerCharacter");
+        numpadController = GameObject.Find("NumpadEntryController").GetComponent<NumpadEntryController>();
         mainCamera = Camera.main;
         blurEffectMainCamera = mainCamera.GetComponent<BlurOptimized>();
 
@@ -98,5 +100,11 @@ public class SceneController : Controller {
     {
         winController.PauseGame(null);
         PlayerPrefs.SetInt(gameInProgressKey, intFalse);
+    }
+
+    public void SetKeypadPuzzle(Puzzle puzzle)
+    {
+        NumpadEntryController.currentPuzzle = puzzle;
+        numpadController.IntizializeAnswerString();
     }
 }

@@ -64,29 +64,24 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
                 Debug.Log("Locked");
                 menuController.PauseGame(keypad);
                 GameObject.FindObjectOfType<NumpadEntryController>().thisUnlockable = this.gameObject;
+               menuController.SetKeypadPuzzle(this.gameObject.GetComponent<Puzzle>());
                 // Peter Wages
             }
             else
             {
-
-                isMoving = true;
                 if (isOpen)
                 {
-                    targetAngle = closeAngle;
-                    playCloseSound();
-                    isOpen = false;
+                    ToggleDoor(closeAngle, close, false);
                 }
                 else
                 {
-                    targetAngle = openAngle;
-                    playOpenSound();
-                    isOpen = true;
+                    ToggleDoor(openAngle, open, true);
                 }
             }
         }
         else if (isMoving && !isLocked)
         {
-            moveDoor(targetAngle);
+            MoveDoor(targetAngle);
         }
     }
    
@@ -101,7 +96,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     }
     
     //moves the door towards the desired angle in increments
-    private void moveDoor(float angle){
+    private void MoveDoor(float angle){
         if(Mathf.Abs(currentAngle-angle) < 4){
             isMoving = false;
         }
@@ -114,22 +109,22 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
             currentAngle = currentAngle + 4;
         }
     }
-    
-    //plays door opening sound
-    private void playOpenSound(){
-        AudioSource.PlayClipAtPoint(open, this.transform.position);
-    }
-    //plays door closing sound
-    private void playCloseSound(){
-        AudioSource.PlayClipAtPoint(close, this.transform.position);
-    }
 
     //Peter Wages
     // Unlocks the door
     public void Unlock()
     {
         isLocked = false;
+        ToggleDoor(openAngle, open, true);
     }
     // Peter Wages
+
+    public void ToggleDoor(float angle, AudioClip clip, bool toggle)
+    {
+        isMoving = true;
+        targetAngle = angle;
+        menuController.PlaySoundAtPoint(clip, playerTransform.position);
+        isOpen = toggle;
+    }
 }
 

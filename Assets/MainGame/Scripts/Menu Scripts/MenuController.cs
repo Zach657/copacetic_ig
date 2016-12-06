@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 
@@ -132,5 +133,4 @@ public class MenuController : SceneController {
         Cursor.lockState = CursorLockMode.Confined;
         menuClosed = false;
     }
-
 }
