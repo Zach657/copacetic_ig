@@ -42,15 +42,19 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     
     //used to track the current angle of the door (handles issues with door rotation)
     private float currentAngle;
+
+	private DoorState currentState;
     
     void Start(){
         menuController = GameObject.FindObjectOfType<InGameMenuController>();
         isMoving = false;
         if(isOpen){
             currentAngle = openAngle;
+			currentState = new UnlockedState (this);
         }
         else{
             currentAngle = closeAngle;
+			currentState = new LockedState (this);
         }
         
     }
@@ -58,26 +62,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     void FixedUpdate(){
         if (playerIsNear() && Input.GetKeyDown("e") && !isMoving)
         {
-            if (isLocked)
-            // Peter Wages
-            {
-                Debug.Log("Locked");
-                menuController.PauseGame(keypad);
-                GameObject.FindObjectOfType<NumpadEntryController>().thisUnlockable = this.gameObject;
-               menuController.SetKeypadPuzzle(this.gameObject.GetComponent<Puzzle>());
-                // Peter Wages
-            }
-            else
-            {
-                if (isOpen)
-                {
-                    ToggleDoor(closeAngle, close, false);
-                }
-                else
-                {
-                    ToggleDoor(openAngle, open, true);
-                }
-            }
+			currentState.FixedUpdate();
         }
         else if (isMoving && !isLocked)
         {
@@ -111,11 +96,13 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     }
 
     //Peter Wages
-    // Unlocks the door
+    // Unlocks the door from the numberpad script
     public void Unlock()
     {
         isLocked = false;
+		currentState = new UnlockedState (this);
         ToggleDoor(openAngle, open, true);
+		currentState.MoveDoor();
     }
     // Peter Wages
 
@@ -126,5 +113,56 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
         menuController.PlaySoundAtPoint(clip, playerTransform.position);
         isOpen = toggle;
     }
+
+	// Nathan Pool
+	class LockedState : DoorState {
+		DoorInteract interaction;
+		public LockedState(DoorInteract interaction) {
+			this.interaction = interaction;
+		}
+
+		public void MoveDoor() {
+			Debug.Log("Locked");
+			interaction.menuController.PauseGame(interaction.keypad);
+			GameObject.FindObjectOfType<NumpadEntryController>().thisUnlockable = interaction.gameObject;
+			interaction.menuController.SetKeypadPuzzle(interaction.gameObject.GetComponent<Puzzle>());
+		}
+
+		public void FixedUpdate() {
+			this.MoveDoor ();
+		}
+
+		public void PlaySound() {
+			AudioSource.PlayClipAtPoint(interaction.close, interaction.transform.position);
+		}
+	}
+
+	//Nathan Pool
+	class UnlockedState : DoorState {
+		DoorInteract interaction;
+		public UnlockedState(DoorInteract interaction) {
+			this.interaction = interaction;
+		}
+
+		public void MoveDoor() {
+			if (interaction.isOpen)
+			{
+				interaction.ToggleDoor(interaction.closeAngle, interaction.close, false);
+			}
+			else
+			{
+				interaction.ToggleDoor(interaction.openAngle, interaction.open, true);
+			}
+		}
+
+		public void PlaySound() {
+			AudioSource.PlayClipAtPoint(interaction.open, interaction.transform.position);
+		}
+
+		public void FixedUpdate() {
+			this.MoveDoor ();
+		}
+	}
+
 }
 

@@ -1,5 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: 0ac7cd95884c64f66b7d3856c8c7aec0
+||||||| merged common ancestors
+guid: b748184a9ae9e4507ab94baf373c2915
+=======
+guid: 4b56a08d86ba5443caa666f65c9c67cd
+>>>>>>> Stashed changes
 timeCreated: 1477442364
 licenseType: Free
 DefaultImporter:
