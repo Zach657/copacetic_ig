@@ -44,6 +44,7 @@ public class MenuController : SceneController {
         volumeSlider.value = volumeLevel * wholeNumberSettingsMultiplier;
 
         Time.timeScale = timeScaleOriginal;
+        menuClosed = true;
     }
 
     // Exit/Quit the game - Does not work in Unity Editor, works in builds only
