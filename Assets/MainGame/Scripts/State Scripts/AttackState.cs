@@ -34,7 +34,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AttackState : State {
+public class AttackState : MonoBehaviour, State {
 	MoveCrawler moveCrawler;
 	Animator animator;
 	GameObject crawler;

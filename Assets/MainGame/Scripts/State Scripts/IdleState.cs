@@ -40,7 +40,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IdleState : State {
+public class IdleState : MonoBehaviour, State {
 	MoveCrawler moveCrawler;
 	Animator animator;
 	GameObject crawler;
