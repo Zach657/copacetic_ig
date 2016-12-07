@@ -38,6 +38,7 @@ public class SceneController : Controller {
         currentScene = SceneManager.GetActiveScene().name;
         SaveGame();
 
+        playerAlive = true;
         playerCharacter = GameObject.Find("PlayerCharacter");
         numpadController = GameObject.Find("NumpadEntryController").GetComponent<NumpadEntryController>();
         mainCamera = Camera.main;
