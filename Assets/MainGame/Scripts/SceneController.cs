@@ -50,7 +50,7 @@ public class SceneController : Controller {
 		message.Add("I have a family… L-Landry?... and a …  and a kid... Ronan! Where are they?");
 		message.Add("There was an accident I think … Jesus, my head is killing me. Where the hell am I!?");
 		message.Add("I remember now.  I was in the car and then … then what?");
-		message.Add("Someone’s in the road. Someones in the road and they aren’t moving they’re just standing there. Move! I can’t stop! The car’s not stopping!");
+		message.Add("Someone’s in the road. Someone's in the road and they aren’t moving they’re just standing there. Move! I can’t stop! The car’s not stopping!");
 		message.Add("That… that was me.");
 		message.Add("Did I die?");
 		message.Add("This can’t be the end.");
