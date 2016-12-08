@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.ImageEffects;
+using UnityEngine.UI;
 
 /** 
  * Copyright (C) 2016 - Peter Wages
@@ -24,13 +25,12 @@ public class SceneController : Controller {
 	private const int TOTALBRAINS = 10;
 
 	//Used to update the inventory with the number of brains collected
-	[SerializeField] private GameObject inventoryBrainsCollectedObject;
+	[SerializeField] private Text brainCollectedText;
 
 	private List<string> message = new List<string>();
 
     // Time variables to allow pausing of game
     public static float timeScaleOriginal = 1;
-
 
     // Use this for initialization
     void Start () {
@@ -72,7 +72,7 @@ public class SceneController : Controller {
 			TriggerWin ();
 		}
 		PlayerPrefs.SetInt(brainsCollectedKey, numBrains);
-
+		brainCollectedText.text = numBrains + "/10";
 		//Displays Memory to Screen
 		RecallMemory(numBrains);
 
@@ -86,7 +86,7 @@ public class SceneController : Controller {
 
 	// Called when the player collects a notebook
 	public void NotebookCollected(){
-
+		DisplayNotification ("Notebook Collected");
 	}
 
     // Triggers death
