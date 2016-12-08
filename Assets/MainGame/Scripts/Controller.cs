@@ -16,6 +16,10 @@ public class Controller : MonoBehaviour {
     public const string volumeLevelKey = KEYBASE + "VolumeLevelKey";
     public const string savedGameSceneKey = KEYBASE + "SavedGameSceneKey";
 
+    // Level loading strings
+    public const string LEVELONE = "environment-asylum";
+    public const string LEVELTWO = "environment-outside";
+
     // Project-wide integer based booleans for use in Player Prefs ONLY
     public const int intTrue = 1;
     public const int intFalse = 0;

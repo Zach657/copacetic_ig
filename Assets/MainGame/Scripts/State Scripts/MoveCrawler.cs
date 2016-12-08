@@ -72,7 +72,10 @@ public class MoveCrawler : MonoBehaviour {
 		    aHit.collider.tag.Equals ("Player")) {
 			currentState = new CrawlFastState (this);
 		} else {
-			currentState = new CrawlState (this);
+            if (currentState.GetType() != typeof(CrawlState))
+            {
+                currentState = new CrawlState(this);
+            }
 		}
 	}
 

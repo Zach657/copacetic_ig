@@ -10,6 +10,8 @@ public class NumpadEntryController : MenuController {
     private GameObject numpadObject;
     [SerializeField]
     private Text numpadEntryTextField;
+    [SerializeField]
+    private AudioClip incorrectAnser;
     private List<string> numbers = new List<string>();
     private List<string> resetList;
 
@@ -55,13 +57,12 @@ public class NumpadEntryController : MenuController {
     {
         if (currentAnswer.Contains(currentPuzzle.answer))
         {
-            Debug.Log("CORRECT");
             ResumeGame();
             thisUnlockable.GetComponent<UnlockableObject>().Unlock();
         }
         else {
-            Debug.Log("INCORRECT");
             IntizializeAnswerString();
+            PlaySoundAtPoint(incorrectAnser, playerCharacter.transform.position);
         }
     }
 }
