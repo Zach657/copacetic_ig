@@ -23,7 +23,7 @@ public class MoveCrawler : MonoBehaviour {
 	private Ray crawlerSight;
 	//private LineRenderer laser;
 	private RaycastHit aHit;
-	private const int SIGHT_LENGTH = 30;
+	private const int SIGHT_LENGTH = 70;
 
 	// State pattern
 	private bool isSeen;
