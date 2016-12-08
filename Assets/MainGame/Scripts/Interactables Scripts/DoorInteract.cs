@@ -3,9 +3,9 @@ using System.Collections;
 using System;
 
 /** 
- * Copyright (C) 2016 - James Greenwell & Peter Wages
+ * Copyright (C) 2016 - James Greenwell, Nathan Pool & Peter Wages
  **/
- // All James Greenwell, except where noted
+ // James Greenwell, except where noted, refactored into states by Nathan Pool
 public class DoorInteract : MonoBehaviour, UnlockableObject {
     //Sets the open and close angles for the given door
     [SerializeField] private float openAngle;
@@ -48,13 +48,18 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     void Start(){
         menuController = GameObject.FindObjectOfType<InGameMenuController>();
         isMoving = false;
-        if(isOpen){
-            currentAngle = openAngle;
+        if(!isLocked){
 			currentState = new UnlockedState (this);
         }
         else{
-            currentAngle = closeAngle;
 			currentState = new LockedState (this);
+        }
+        if (isOpen)
+        {
+            currentAngle = openAngle;
+        } else
+        {
+            currentAngle = closeAngle;
         }
         
     }
@@ -62,7 +67,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     void FixedUpdate(){
         if (playerIsNear() && Input.GetKeyDown("e") && !isMoving)
         {
-			currentState.FixedUpdate();
+			currentState.MoveDoor();
         }
         else if (isMoving && !isLocked)
         {
@@ -102,7 +107,6 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
         isLocked = false;
 		currentState = new UnlockedState (this);
         ToggleDoor(openAngle, open, true);
-		currentState.MoveDoor();
     }
     // Peter Wages
 
@@ -122,18 +126,9 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
 		}
 
 		public void MoveDoor() {
-			Debug.Log("Locked");
 			interaction.menuController.PauseGame(interaction.keypad);
 			GameObject.FindObjectOfType<NumpadEntryController>().thisUnlockable = interaction.gameObject;
 			interaction.menuController.SetKeypadPuzzle(interaction.gameObject.GetComponent<Puzzle>());
-		}
-
-		public void FixedUpdate() {
-			this.MoveDoor ();
-		}
-
-		public void PlaySound() {
-			AudioSource.PlayClipAtPoint(interaction.close, interaction.transform.position);
 		}
 	}
 
@@ -153,14 +148,6 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
 			{
 				interaction.ToggleDoor(interaction.openAngle, interaction.open, true);
 			}
-		}
-
-		public void PlaySound() {
-			AudioSource.PlayClipAtPoint(interaction.open, interaction.transform.position);
-		}
-
-		public void FixedUpdate() {
-			this.MoveDoor ();
 		}
 	}
 

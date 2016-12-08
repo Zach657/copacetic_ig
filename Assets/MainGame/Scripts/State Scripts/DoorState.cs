@@ -7,9 +7,5 @@ public interface DoorState {
 	
 	void MoveDoor ();
 
-	void PlaySound();
-
-	void FixedUpdate();
-
 }
 
