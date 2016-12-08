@@ -103,9 +103,10 @@ public class SceneController : Controller {
         PlayerPrefs.SetInt(gameInProgressKey, intFalse);
     }
 
+    // Sets the current puzzle that the keypad entry is trying to solve
     public void SetKeypadPuzzle(Puzzle puzzle)
     {
         NumpadEntryController.currentPuzzle = puzzle;
         numpadController.IntizializeAnswerString();
     }
-}
+    }

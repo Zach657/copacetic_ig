@@ -63,7 +63,7 @@ public class Controller : MonoBehaviour {
     {
         notificationWindowSystem.GetComponent<Image>().CrossFadeAlpha(visibleBackgroundAlpha, fadeDuration, false);
         notificationMessage.CrossFadeAlpha(visibleAlpha, fadeDuration, false);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         notificationWindowSystem.GetComponent<Image>().CrossFadeAlpha(invisibleAlpha, fadeDuration, false);
         notificationMessage.CrossFadeAlpha(invisibleAlpha, fadeDuration, false);
     }
