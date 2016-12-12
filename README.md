@@ -27,25 +27,40 @@
 
 ## Credits:
 * Material Design Icons - (C) Google
-* Unity Asset Store Assets - (C) Multiple Creators
-* Standard Assets (C) Unity Technologies
-* Buildings (C)
-* Campfire (C) - David Stenfors
-* Clean Settings UI (C) Landan Lloyd
-* Forest Grounds Texture Pack (C)
-* FRMusic (C)
-* Google Material Design (C) Adi Zhavo
-* Horror Sfx (C) Little Robot Sound Factory
-* Hospital Horror Pack (C) FoeJofMay
-* Keypad (C) Robotparts
-* MCS Male Lite (C) Morph 3D
-* Morgue Room PBR (C) Rokay3D
-* Oculus VR (C) Oculus VR
-* Tree9 (C) Rakshi Games
-* True_Horror Crawler & Scarecrow (C) Witch-A-Twin Studios
-* UITween (C) Adi Zhavo
-* Wrong Answer Sound Effect (C) Orange Free Sounds
-
+* Unity Asset Store Assets
+  * Standard Assets (C) Unity Technologies
+  * Abandoned Buildings (C) Aleksey Kozhemyakin
+  * Campfire (C) - David Stenfors
+  * Clean Settings UI (C) Landan Lloyd
+  * Forest Grounds - Terrain Texture Pack for Unity 3D (C) Don Whitaker
+  * FRMusic (C)
+  * FPS Level (C) 3DMaesen
+  * Google Material Design (C) Adi Zhavo
+  * Horror Sfx (C) Little Robot Sound Factory
+  * Hospital Horror Pack (C) FoeJofMay
+  * Keypad (C) Robotparts
+  * MCS Male Lite (C) Morph 3D
+  * Modular Abandoned Slaughterhouse: Lite (C) Mila Shalabai
+  * Morgue Room PBR (C) Rokay3D
+  * Nature Starter Kit 2 (C) Shapes
+  * Oculus VR (C) Oculus VR
+  * PBR Industrial Props (C) Adequate
+  * Realistic Tree 9 (C) Rakshi Games
+  * True_Horror Crawler & Scarecrow (C) Witch-A-Twin Studios
+  * UITween (C) Adi Zhavo
+  * Western Audio & Music (C) John Leonard French
+  * Wrong Answer Sound Effect (C) Orange Free Sounds
+* Other Assets
+  * Static Sound (C) SoundBible.com
+  * Blood Splatter Images (C) Pixabay.com
+  * Noises Background (Modified) (C) Pixabay.com
+  * Scroll Background (C) Pixabay.com
+  * Medical Form (Modified) (C) Jennifer Fitzpatrick
+* Music
+  * Long Note Two (C) Kevin MacLeod, Incompetech.com
+  * Dark Walk (C) Kevin MacLeod, Incompetech.com
+  
+  
 ## Website
 https://rawgit.com/pwages/copaceticgames/master/html/index.html
 
