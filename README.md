@@ -33,7 +33,6 @@
   * Campfire (C) - David Stenfors
   * Clean Settings UI (C) Landan Lloyd
   * Forest Grounds - Terrain Texture Pack for Unity 3D (C) Don Whitaker
-  * FRMusic (C)
   * FPS Level (C) 3DMaesen
   * Google Material Design (C) Adi Zhavo
   * Horror Sfx (C) Little Robot Sound Factory
