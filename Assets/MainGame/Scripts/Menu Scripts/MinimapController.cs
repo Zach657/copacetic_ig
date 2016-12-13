@@ -7,6 +7,6 @@ public class MinimapController : MonoBehaviour {
     private void Update()
     {
         // check for attempts to open / close minimap on m button press
-        SceneController.OpenCloseMenuOnButtonPress(KeyCode.M, Utilities.minimap);
+        SceneController.ToggleMenuOnButtonPress(KeyCode.M, Utilities.minimap);
     }
 }

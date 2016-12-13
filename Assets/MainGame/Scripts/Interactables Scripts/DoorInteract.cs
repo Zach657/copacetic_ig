@@ -5,45 +5,29 @@ using System;
 /** 
  * Copyright (C) 2016 - James Greenwell, Nathan Pool & Peter Wages
  **/
- // James Greenwell, except where noted, refactored into states by Nathan Pool
+ // James Greenwell, except where noted, then refactored into states by Nathan Pool
 public class DoorInteract : MonoBehaviour, UnlockableObject {
     //Sets the open and close angles for the given door
     [SerializeField] private float openAngle;
     [SerializeField] private float closeAngle;
-    
-    //References to the open and close door sound clips
-    [SerializeField] private AudioClip open;
-    [SerializeField] private AudioClip close;
-    
-    //Sets the distance the player must be from the door to interact with it
-    [SerializeField] private float minDistance;
-    
+    //boolean for whether or not the door is moving
+    private bool isMoving;
+    //used to determine which angle the door should move towards
+    private float targetAngle;
+    //used to track the current angle of the door (handles issues with door rotation)
+    private float currentAngle;
+
     //boolean for whether or not the door is open
     [SerializeField] private bool isOpen;
-
     // Peter Wages
-    [SerializeField]
-    private MenuController menuController;
-    [SerializeField]
-    private GameObject keypad;
     //boolean for whether or not the door is locked
     [SerializeField]
     private bool isLocked;
     // Peter Wages
 
-    //boolean for whether or not the door is moving
-    private bool isMoving;
-    
-    //used to determine which angle the door should move towards
-    private float targetAngle;
-    
-    //used to track the current angle of the door (handles issues with door rotation)
-    private float currentAngle;
-
 	private DoorState currentState;
     
     void Start(){
-        menuController = GameObject.FindObjectOfType<InGameMenuController>();
         isMoving = false;
         if(!isLocked){
 			currentState = new UnlockedState (this);
@@ -93,7 +77,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     {
         isLocked = false;
 		currentState = new UnlockedState (this);
-        ToggleDoor(openAngle, open, true);
+        ToggleDoor(openAngle, Utilities.openDoorSound, true);
     }
     // Peter Wages
 
@@ -113,7 +97,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
 		}
 
 		public void MoveDoor() {
-			Utilities.sceneController.PauseGame(interaction.keypad);
+			Utilities.sceneController.PauseGame(Utilities.numpadObject);
 			Utilities.numpadController.thisUnlockable = interaction.gameObject;
             SceneController.SetKeypadPuzzle(interaction.gameObject.GetComponent<Puzzle>());
 		}
@@ -129,11 +113,11 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
 		public void MoveDoor() {
 			if (interaction.isOpen)
 			{
-				interaction.ToggleDoor(interaction.closeAngle, interaction.close, false);
+				interaction.ToggleDoor(interaction.closeAngle, Utilities.closeDoorSound, false);
 			}
 			else
 			{
-				interaction.ToggleDoor(interaction.openAngle, interaction.open, true);
+				interaction.ToggleDoor(interaction.openAngle, Utilities.openDoorSound, true);
 			}
 		}
 	}
