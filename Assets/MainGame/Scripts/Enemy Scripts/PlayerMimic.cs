@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 //using UnityEngine.Microphone;
 using System.Collections;
-
+/** 
+ * Copyright (C) 2016 - James Greenwell
+ **/
 public class PlayerMimic : MonoBehaviour {
 	private AudioSource audioSource;
 	private const int MICDELAY = 500;
