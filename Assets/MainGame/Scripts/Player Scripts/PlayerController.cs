@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     // On hitting an enemy, player dies
     void OnCollisionEnter(Collision collision)
     {
+		Debug.Log ("hit");
         if (collision.gameObject.tag == "Enemy" && !readyForDeath)
         {
             SceneController.TriggerDeath();
