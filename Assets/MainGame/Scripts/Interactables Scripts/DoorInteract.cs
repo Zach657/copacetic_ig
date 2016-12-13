@@ -15,9 +15,6 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     [SerializeField] private AudioClip open;
     [SerializeField] private AudioClip close;
     
-    //A reference to the player object
-    [SerializeField] private Transform playerTransform;
-    
     //Sets the distance the player must be from the door to interact with it
     [SerializeField] private float minDistance;
     
@@ -65,7 +62,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     }
     
     void FixedUpdate(){
-        if (playerIsNear() && Input.GetKeyDown("e") && !isMoving)
+        if (SceneController.playerIsNear(this.gameObject) && Input.GetKeyDown("e") && !isMoving)
         {
 			currentState.MoveDoor();
         }
@@ -73,16 +70,6 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
         {
             MoveDoor(targetAngle);
         }
-    }
-   
-    
-    private bool playerIsNear(){
-        float xDistance = Mathf.Abs(gameObject.transform.position.x-playerTransform.position.x);
-        float zDistance = Mathf.Abs(gameObject.transform.position.z-playerTransform.position.z);
-        if(Mathf.Sqrt((xDistance*xDistance) + (zDistance*zDistance)) <= minDistance){
-            return true;
-        }
-        return false;
     }
     
     //moves the door towards the desired angle in increments
@@ -114,7 +101,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     {
         isMoving = true;
         targetAngle = angle;
-        menuController.PlaySoundAtPoint(clip, playerTransform.position);
+        SceneController.PlaySoundAtPoint(clip, Utilities.playerCharacter.transform.position);
         isOpen = toggle;
     }
 
@@ -126,9 +113,9 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
 		}
 
 		public void MoveDoor() {
-			interaction.menuController.PauseGame(interaction.keypad);
-			GameObject.FindObjectOfType<NumpadEntryController>().thisUnlockable = interaction.gameObject;
-			interaction.menuController.SetKeypadPuzzle(interaction.gameObject.GetComponent<Puzzle>());
+			Utilities.sceneController.PauseGame(interaction.keypad);
+			Utilities.numpadController.thisUnlockable = interaction.gameObject;
+            SceneController.SetKeypadPuzzle(interaction.gameObject.GetComponent<Puzzle>());
 		}
 	}
 

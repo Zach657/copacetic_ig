@@ -4,12 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-public class NumpadEntryController : MenuController {
-
-    [SerializeField]
-    private GameObject numpadObject;
-    [SerializeField]
-    private Text numpadEntryTextField;
+public class NumpadEntryController : MonoBehaviour {
     [SerializeField]
     private AudioClip incorrectAnser;
     private List<string> numbers = new List<string>();
@@ -29,7 +24,7 @@ public class NumpadEntryController : MenuController {
             printable += character;
         }
         currentAnswer = printable;
-        numpadEntryTextField.text = printable;
+        Utilities.numpadEntryTextField.text = printable;
     }
 
     public void IntizializeAnswerString()
@@ -57,12 +52,12 @@ public class NumpadEntryController : MenuController {
     {
         if (currentAnswer.Contains(currentPuzzle.answer))
         {
-            ResumeGame();
+            Utilities.sceneController.ResumeGame();
             thisUnlockable.GetComponent<UnlockableObject>().Unlock();
         }
         else {
             IntizializeAnswerString();
-            PlaySoundAtPoint(incorrectAnser, playerCharacter.transform.position);
+            SceneController.PlaySoundAtPoint(incorrectAnser, Utilities.playerCharacter.transform.position);
         }
     }
 }

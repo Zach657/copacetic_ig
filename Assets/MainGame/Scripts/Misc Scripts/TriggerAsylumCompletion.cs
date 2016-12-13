@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TriggerAsylumCompletion : Controller {
+public class TriggerAsylumCompletion : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     { 
         if (other.gameObject.tag == "Player")
         {
-            LoadGameScene(LEVELTWO);
+            Utilities.sceneController.LoadGameScene(Utilities.LEVELTWO);
         }
     }
 }

@@ -2,12 +2,6 @@
 using System.Collections;
 
 public class CompassContoller : MonoBehaviour {
-    [SerializeField]
-    private Transform playerTransform;
-    [SerializeField]
-    private Transform compassImage;
-
-    [SerializeField]
     // Image direction point does not start at North
     private float imageZRotationImageAdjustment = 28.5f;
     // Minimap is upside down, this is the "North" is really "South" adjustment
@@ -22,10 +16,10 @@ public class CompassContoller : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        Quaternion rotation = compassImage.rotation;
+        Quaternion rotation = Utilities.compass.transform.rotation;
         // Sets the compass' rotation by the player's rotation with the adjustments needed.
-        rotation = Quaternion.Euler(0, 0, (playerTransform.rotation.eulerAngles.y + totalAdjustment));
-        compassImage.rotation = rotation;
+        rotation = Quaternion.Euler(0, 0, (Utilities.playerCharacter.transform.rotation.eulerAngles.y + totalAdjustment));
+        Utilities.compass.transform.rotation = rotation;
 
 
     }

@@ -5,73 +5,73 @@ using UnityEngine;
  * Copyright (C) 2016 - Peter Wages & Unity
  **/
 
-namespace UnityStandardAssets.Characters.ThirdPerson
-{
     public class FootstepsAndJumping : MonoBehaviour
     {
-        private float m_StepInterval;
+        private float stepInterval;
         private float crouchingStepInterval = 0.6f;
         private float runningStepInterval = 0.3f;
         [SerializeField]
-        private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
+        private AudioClip[] footstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField]
-        private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
+        private AudioClip jumpSound;           // the sound played when character leaves the ground.
         [SerializeField]
-        private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        private AudioSource m_AudioSource;
-        private bool m_IsGrounded;
-        private bool m_Crouching;
+        private AudioClip landSound;           // the sound played when character touches back on ground.
+        private AudioSource audioSource;
+        private bool isGrounded;
+        private bool crouching;
 
         // Peter Wages
-        private bool m_PlayLandingSound = false;
-        private bool StepsPlaying = false;
+        private bool playLandingSound = false;
+        private bool stepsPlaying = false;
         private bool footstepsSpeedChange = false;
         private IEnumerator footStepsCoroutine;
-        private ThirdPersonCharacter playerController;
-        // End Peter Wages
+        private CharacterController playerController;
+        private FPSInput input;
+    // End Peter Wages
 
-        void Start()
+    void Start()
         {
-            m_AudioSource = GetComponent<AudioSource>();
-            playerController = this.GetComponent<ThirdPersonCharacter>();
+            audioSource = GetComponent<AudioSource>();
+            playerController = GetComponent<CharacterController>();
+        input = GetComponent<FPSInput>();
         }
 
         // Peter Wages
         private void Update()
         {
-            m_IsGrounded = playerController.m_IsGrounded;
-            bool previousState = m_Crouching;
-            m_Crouching = playerController.m_Crouching;
-            if (previousState != m_Crouching)
+            isGrounded = playerController.isGrounded;
+            bool previousState = crouching;
+            crouching = input.crouching;
+            if (previousState != crouching)
             {
                 footstepsSpeedChange = true;
             }
-            if (!m_IsGrounded && playerController.m_PlayJumpSound)
+            if (!isGrounded && input.playJumpSound)
             {
                 PlayJumpSound();
-                playerController.m_PlayJumpSound = false;
-                m_PlayLandingSound = true;
+                input.playJumpSound = false;
+                playLandingSound = true;
             }
-            else if (m_IsGrounded && m_PlayLandingSound)
+            else if (isGrounded && playLandingSound)
             {
                 PlayLandingSound();
-                m_PlayLandingSound = false;
+                playLandingSound = false;
             }
         }
 
         private void FixedUpdate()
         { 
-            if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && (!StepsPlaying && !footstepsSpeedChange))
+            if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && (!stepsPlaying && !footstepsSpeedChange))
             {
-                if (m_Crouching) m_StepInterval = crouchingStepInterval;
-                else m_StepInterval = runningStepInterval;
-                InvokeRepeating("PlayFootStepAudio", 0f, m_StepInterval);
-                StepsPlaying = true;
+                if (crouching) stepInterval = crouchingStepInterval;
+                else stepInterval = runningStepInterval;
+                InvokeRepeating("PlayFootStepAudio", 0f, stepInterval);
+                stepsPlaying = true;
             }
-            else if ((!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && StepsPlaying) || (footstepsSpeedChange && StepsPlaying))
+            else if ((!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && stepsPlaying) || (footstepsSpeedChange && stepsPlaying))
             {
                 CancelInvoke("PlayFootStepAudio");
-                StepsPlaying = false;
+                stepsPlaying = false;
                 footstepsSpeedChange = false;
             }
         }
@@ -79,30 +79,29 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void PlayJumpSound()
         {
-            m_AudioSource.clip = m_JumpSound;
-            m_AudioSource.Play();
+            audioSource.clip = jumpSound;
+            audioSource.Play();
         }
 
         private void PlayLandingSound()
         {
-            m_AudioSource.clip = m_LandSound;
-            m_AudioSource.Play();
+            audioSource.clip = landSound;
+            audioSource.Play();
         }
 
         private void PlayFootStepAudio()
         {
-            if (!m_IsGrounded)
+            if (!isGrounded)
             {
                 return;
             }
             // pick & play a random footstep sound from the array,
             // excluding sound at index 0
-            int n = Random.Range(1, m_FootstepSounds.Length);
-            m_AudioSource.clip = m_FootstepSounds[n];
-            m_AudioSource.PlayOneShot(m_AudioSource.clip);
+            int n = Random.Range(1, footstepSounds.Length);
+            audioSource.clip = footstepSounds[n];
+            audioSource.PlayOneShot(audioSource.clip);
             // move picked sound to index 0 so it's not picked next time
-            m_FootstepSounds[n] = m_FootstepSounds[0];
-            m_FootstepSounds[0] = m_AudioSource.clip;
+            footstepSounds[n] = footstepSounds[0];
+            footstepSounds[0] = audioSource.clip;
         }
     }
-}

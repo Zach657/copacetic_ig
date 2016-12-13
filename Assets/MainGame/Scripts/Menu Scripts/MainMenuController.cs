@@ -18,7 +18,7 @@ public class MainMenuController : MenuController
     private void Start()
     {
         // 1 is true, 0 is false, since PlayerPrefs does not support booleans natively
-        if (PlayerPrefs.GetInt(gameInProgressKey, intFalse) == intFalse)
+        if (PlayerPrefs.GetInt(Utilities.GAMEINPROGRESSKEY, Utilities.INTFALSE) == Utilities.INTFALSE)
         {
             newGameButton.GetComponent<RectTransform>().anchoredPosition3D = centerNewGameNoContinue;
             Destroy(continueGameButton);

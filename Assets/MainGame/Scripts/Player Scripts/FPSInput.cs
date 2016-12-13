@@ -19,8 +19,9 @@ public class FPSInput : MonoBehaviour
     private CharacterController characterController;
     private float jumpSmoothness = .2f;
     private float crouchSmoothness = .1f;
-    private bool crouching = false;
+    public bool crouching = false;
     private bool jumpCompleted = true;
+    public bool playJumpSound;
 
     void Start()
     {
@@ -88,6 +89,7 @@ public class FPSInput : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
+                playJumpSound = true;
                 vertSpeed = jumpSpeed;
             }
             else
