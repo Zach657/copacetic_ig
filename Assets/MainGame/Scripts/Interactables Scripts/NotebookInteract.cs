@@ -7,7 +7,7 @@ using UnityEngine.UI;
  **/
 
 public class NotebookInteract : MonoBehaviour {
-	//Sets the audio clip that plays when the player collect the brain
+	//Sets the audio clip that plays when the player collect the notebook
 	[SerializeField] private AudioClip ac;
 
 	//Connects the notebook to its inventory counterpart
@@ -18,7 +18,7 @@ public class NotebookInteract : MonoBehaviour {
 
 	}
 
-	//Constantly checking whether or not the player is interacting with the brain
+	//Constantly checking whether or not the player is interacting with the notebook
 	void Update () {
 		if(SceneController.playerIsNear(this.gameObject) && Input.GetKeyDown("e")){
 			playSound();
@@ -30,7 +30,7 @@ public class NotebookInteract : MonoBehaviour {
         }
 	}
 
-	//Plays a sound when the player collects the brain
+	//Plays a sound when the player collects the notebook
 	private void playSound(){
 		AudioSource.PlayClipAtPoint(ac, Utilities.playerCharacter.transform.position);
 	}
