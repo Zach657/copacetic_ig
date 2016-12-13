@@ -4,6 +4,10 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
+/** 
+ * Copyright (C) 2016 - Peter Wages
+ **/
+
 public class NumpadEntryController : MonoBehaviour {
     [SerializeField]
     private AudioClip incorrectAnser;
@@ -14,8 +18,10 @@ public class NumpadEntryController : MonoBehaviour {
     private int currentIndex = 0;
     private string currentAnswer;
 
+    [HideInInspector]
     public GameObject thisUnlockable;
 
+    // Prints the current entered text
     private void printString(List<string> list)
     {
         string printable = "";
@@ -27,7 +33,8 @@ public class NumpadEntryController : MonoBehaviour {
         Utilities.numpadEntryTextField.text = printable;
     }
 
-    public void IntizializeAnswerString()
+    // Initializes the current puzzle's answer
+    public void InitizializeAnswerString()
     {
         numbers.Clear();
         for (int i = 0; i < currentPuzzle.numberOfNumbersToEnter; i++)
@@ -38,6 +45,7 @@ public class NumpadEntryController : MonoBehaviour {
         printString(numbers);
     }
 
+    // Insert the button clicked to current entered string when clicked
     public void ButtonClicked(ButtonController button)
     {
         currentIndex = button.Clicked(numbers, currentIndex);
@@ -48,6 +56,7 @@ public class NumpadEntryController : MonoBehaviour {
         }
     }
 
+    // Compares the current entered string to the answer
     public void ButtonSubmit()
     {
         if (currentAnswer.Contains(currentPuzzle.answer))
@@ -56,7 +65,7 @@ public class NumpadEntryController : MonoBehaviour {
             thisUnlockable.GetComponent<UnlockableObject>().Unlock();
         }
         else {
-            IntizializeAnswerString();
+            InitizializeAnswerString();
             SceneController.PlaySoundAtPoint(incorrectAnser, Utilities.playerCharacter.transform.position);
         }
     }

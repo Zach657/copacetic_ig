@@ -17,7 +17,6 @@ public class SceneController: MonoBehaviour {
 
 	private List<string> brainJarMemories = new List<string>();
 
-    // Use this for initialization
     void Start()
     {
         // At the start of each scene, save the checkpoint
@@ -43,7 +42,7 @@ public class SceneController: MonoBehaviour {
     public void BrainCollected(){
         brainsCollected++;
 		if (brainsCollected >= TOTALBRAINS) {
-			TriggerWin ();
+            LoadGameScene(Utilities.LEVELTHREE);
 		}
 		Utilities.memoriesCollectedText.text = brainsCollected + "/10";
         DisplayNotification(brainJarMemories[brainsCollected - 1]);
@@ -61,7 +60,7 @@ public class SceneController: MonoBehaviour {
     public static void SetKeypadPuzzle(Puzzle puzzle)
     {
         NumpadEntryController.currentPuzzle = puzzle;
-        Utilities.numpadController.IntizializeAnswerString();
+        Utilities.numpadController.InitizializeAnswerString();
     }
 
     // Controls enabling/deactivating camera movement, blur effect, cursor visability
@@ -126,6 +125,7 @@ public class SceneController: MonoBehaviour {
     // Loads a specific scene
     public void LoadGameScene(string sceneName)
     {
+        Utilities.loadingScreen.SetActive(true);
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
@@ -146,6 +146,7 @@ public class SceneController: MonoBehaviour {
         Utilities.notificationMessage.CrossFadeAlpha(Utilities.INVISIBLEALPHA, Utilities.FADEDURATION, false);
     }
 
+    // Detects if the player is near an object
     public static bool playerIsNear(GameObject comparison)
     {
         float xDistance = Mathf.Abs(comparison.transform.position.x - Utilities.playerCharacter.transform.position.x);
@@ -167,7 +168,8 @@ public class SceneController: MonoBehaviour {
         AudioSource.PlayClipAtPoint(audio, location);
     }
 
-    public static void OpenCloseMenuOnButtonPress(UnityEngine.KeyCode KeyCodeToBePressed, GameObject objectToToggle) {
+    // Toggles a menu on a key press
+    public static void ToggleMenuOnButtonPress(UnityEngine.KeyCode KeyCodeToBePressed, GameObject objectToToggle) {
         if (Input.GetKeyDown(KeyCodeToBePressed) && Utilities.menuClosed && Utilities.playerAlive)
         {
             Utilities.sceneController.PauseGame(objectToToggle);

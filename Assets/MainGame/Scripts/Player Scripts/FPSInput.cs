@@ -23,6 +23,7 @@ public class FPSInput : MonoBehaviour
     private bool jumpCompleted = true;
     public bool playJumpSound;
 
+    // Gets character 
     void Start()
     {
         characterController = GetComponent<CharacterController>();

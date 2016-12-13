@@ -19,6 +19,7 @@ public class Utilities: MonoBehaviour {
     // Level loading strings
     public const string LEVELONE = "environment-asylum";
     public const string LEVELTWO = "environment-outside";
+    public const string LEVELTHREE = "environment-hospital";
 
     // Project-wide integer based booleans for use in Player Prefs ONLY
     public const int INTTRUE = 1;
@@ -28,8 +29,8 @@ public class Utilities: MonoBehaviour {
     public const float INVISIBLEALPHA = 1f;
     public const float VISIBLEALPHA = 255f;
     public const float VISIBLEBACKGROUNDALPHA = 150f;
-    public const float FADEDURATION = 1.25f;
-    public const float NOTIFICATIONDURATION = 8;
+    public const float FADEDURATION = 1f;
+    public const float NOTIFICATIONDURATION = 6;
 
     // Controllers for non-static method access
     public static SceneController sceneController;
@@ -77,6 +78,7 @@ public class Utilities: MonoBehaviour {
     // Game results menus
     public static GameObject lostMenu;
     public static GameObject winMenu;
+    public static GameObject loadingScreen;
 
     // Settings systems
     public static Slider volumeSlider;
@@ -85,6 +87,10 @@ public class Utilities: MonoBehaviour {
     // Camera objects
     public static Camera mainCamera;
     public static BlurOptimized blurEffectMainCamera;
+
+    // Door sounds
+    public static AudioClip openDoorSound;
+    public static AudioClip closeDoorSound;
 
 
     // Serialized variables because Unity cannot set static variables in editor, but also cannot find inactive objects using GameObject.Find().
@@ -111,10 +117,17 @@ public class Utilities: MonoBehaviour {
     [SerializeField]
     private GameObject winMenuSerialized;
     [SerializeField]
+    private GameObject loadingScreenSerialized;
+    [SerializeField]
     private Camera mainCameraSerialized;
     [SerializeField]
     private float minmumDistanceSerialized = 1.5f;
+    [SerializeField]
+    private AudioClip openDoorSoundSerialized;
+    [SerializeField]
+    private AudioClip closeDoorSoundSerialized;
 
+    // Connects all the serialized variables to their public static variables
     public void Start()
     {
         sceneController = GetComponent<SceneController>();
@@ -134,8 +147,11 @@ public class Utilities: MonoBehaviour {
         numpadEntryTextField = numpadEntryTextFieldSerialized;
         lostMenu = lostMenuSerialized;
         winMenu = winMenuSerialized;
+        loadingScreen = loadingScreenSerialized;
         mainCamera = Camera.main;
         blurEffectMainCamera = mainCamera.GetComponent<BlurOptimized>();
         minmumDistance = minmumDistanceSerialized;
+        openDoorSound = openDoorSoundSerialized;
+        closeDoorSound = closeDoorSoundSerialized;
     }
 }
