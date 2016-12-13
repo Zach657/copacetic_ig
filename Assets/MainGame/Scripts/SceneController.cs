@@ -150,7 +150,7 @@ public class SceneController: MonoBehaviour {
     {
         float xDistance = Mathf.Abs(comparison.transform.position.x - Utilities.playerCharacter.transform.position.x);
         float zDistance = Mathf.Abs(comparison.transform.position.z - Utilities.playerCharacter.transform.position.z);
-        if (Mathf.Sqrt((xDistance * xDistance) + (zDistance * zDistance)) <= Utilities.MINIMUMDISTANCE)
+        if (Mathf.Sqrt((xDistance * xDistance) + (zDistance * zDistance)) <= Utilities.minmumDistance)
         {
             return true;
         }

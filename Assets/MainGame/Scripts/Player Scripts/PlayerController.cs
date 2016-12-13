@@ -7,12 +7,12 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     // Future implementation
-    private bool readyForDeath = false;
+    private bool readyForDeath = true;
 
     // On hitting an enemy, player dies
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy" && !readyForDeath)
+        if (collision.gameObject.tag == "Enemy" && readyForDeath)
         {
             SceneController.TriggerDeath();
         }
