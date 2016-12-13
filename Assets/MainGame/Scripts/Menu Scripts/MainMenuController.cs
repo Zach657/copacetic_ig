@@ -23,5 +23,6 @@ public class MainMenuController : MenuController
             newGameButton.GetComponent<RectTransform>().anchoredPosition3D = centerNewGameNoContinue;
             Destroy(continueGameButton);
         }
+        Utilities.currentOpenMenu = Utilities.mainMenu;
     }
 }
