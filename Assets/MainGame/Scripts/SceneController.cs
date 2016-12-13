@@ -18,34 +18,25 @@ public class SceneController: MonoBehaviour {
 	private List<string> brainJarMemories = new List<string>();
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         // At the start of each scene, save the checkpoint
         Utilities.currentScene = SceneManager.GetActiveScene().name;
         SaveGame();
         Utilities.playerAlive = true;
         brainsCollected = 0;
 
-		//Adds memory messages to message List
-		brainJarMemories.Add("My… my name … my name is Killian?");
-		brainJarMemories.Add("I have a family… L-Landry?... and a …  and a kid... Ronan! Where are they?");
-		brainJarMemories.Add("There was an accident I think … Jesus, my head is killing me. Where the hell am I!?");
-		brainJarMemories.Add("I remember now.  I was in the car and then … then what?");
-		brainJarMemories.Add("Someone’s in the road. Someone's in the road and they aren’t moving they’re just standing there. Move! I can’t stop! The car’s not stopping!");
-		brainJarMemories.Add("That… that was me.");
-		brainJarMemories.Add("Did I die?");
-		brainJarMemories.Add("This can’t be the end.");
-		brainJarMemories.Add("I won’t let it.");
-		brainJarMemories.Add("I won’t let him keep me here. I can feel my heartbeat. I’m not ready.");
-
-
-        StartCoroutine(DelayedStart());
-    }
-
-    // Prevents the text object from still being "destroyed" on reload. Waits till game reinstatiates the object
-    IEnumerator DelayedStart()
-    {
-        yield return new WaitForSeconds(2);
-        TriggerDeath();
+        //Adds memory messages to message List
+        brainJarMemories.Add("My… my name … my name is Killian?");
+        brainJarMemories.Add("I have a family… L-Landry?... and a …  and a kid... Ronan! Where are they?");
+        brainJarMemories.Add("There was an accident I think … Jesus, my head is killing me. Where the hell am I!?");
+        brainJarMemories.Add("I remember now.  I was in the car and then … then what?");
+        brainJarMemories.Add("Someone’s in the road. Someone's in the road and they aren’t moving they’re just standing there. Move! I can’t stop! The car’s not stopping!");
+        brainJarMemories.Add("That… that was me.");
+        brainJarMemories.Add("Did I die?");
+        brainJarMemories.Add("This can’t be the end.");
+        brainJarMemories.Add("I won’t let it.");
+        brainJarMemories.Add("I won’t let him keep me here. I can feel my heartbeat. I’m not ready.");
     }
 
     // Called when the player collects a brain

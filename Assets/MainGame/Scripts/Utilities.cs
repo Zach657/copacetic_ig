@@ -121,7 +121,10 @@ public class Utilities: MonoBehaviour {
         playerCharacter = GameObject.FindGameObjectWithTag("Player");
         mainMenu = mainMenuSerialized;
         notificationWindowSystem = notificationWindowSystemSerialized;
-        notificationMessage = notificationWindowSystem.GetComponentInChildren<Text>();
+        if (notificationWindowSystem)
+        {
+            notificationMessage = notificationWindowSystem.GetComponentInChildren<Text>();
+        }
         minimap = minimapSerialized;
         compass = compassSerialized;
         memoriesCollectedText = memoriesCollectedTextSerialized;
