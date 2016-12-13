@@ -41,7 +41,7 @@ public class Utilities: MonoBehaviour {
     public const float TIMESCALEORIGINAL = 1;
 
     //Sets the distance the player must be from the brain to interact with it
-    public const float MINIMUMDISTANCE = 1.5f;
+    public static float minmumDistance = 1.5f;
 
     // Scene information
     public static string currentScene;
@@ -112,6 +112,8 @@ public class Utilities: MonoBehaviour {
     private GameObject winMenuSerialized;
     [SerializeField]
     private Camera mainCameraSerialized;
+    [SerializeField]
+    private float minmumDistanceSerialized = 1.5f;
 
     public void Start()
     {
@@ -134,5 +136,6 @@ public class Utilities: MonoBehaviour {
         winMenu = winMenuSerialized;
         mainCamera = Camera.main;
         blurEffectMainCamera = mainCamera.GetComponent<BlurOptimized>();
+        minmumDistance = minmumDistanceSerialized;
     }
 }

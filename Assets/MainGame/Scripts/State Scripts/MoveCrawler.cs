@@ -22,10 +22,11 @@ public class MoveCrawler : MonoBehaviour {
 	//private LineRenderer laser;
 	private RaycastHit aHit;
 	private const int SIGHT_LENGTH = 70;
+    private const float radiusRange = 10f;
 
-	// State pattern
-	//private bool isSeen;
-	private State currentState;
+    // State pattern
+    //private bool isSeen;
+    private State currentState;
 	private State idleState;
 	private State crawlState;
 	private State crawlFastState;
@@ -34,8 +35,6 @@ public class MoveCrawler : MonoBehaviour {
 
 	// Sets the FOV sensitivity
 	private int angleDetect = 65;
-
-	[SerializeField] Transform playerT;
 
 	// Use this for initialization
 	void Start () {
@@ -65,12 +64,13 @@ public class MoveCrawler : MonoBehaviour {
 	//Taken from Peter and Zach's FPS project
 	private bool IsInLOS(){
 		Vector3 crawlerPosition = new Vector3 (crawler.transform.position.x,crawler.transform.position.y + 3f, crawler.transform.position.z);
-		float distanceToPlayer = Vector3.Distance(crawlerPosition, playerT.position);
-		if (distanceToPlayer < 15f) {
+		float distanceToPlayer = Vector3.Distance(crawlerPosition, Utilities.playerCharacter.transform.position);
+		if (distanceToPlayer < 15) {
 			return true;
-		} else if(distanceToPlayer < 45f){
-			RaycastHit[] rayHits = Physics.RaycastAll (crawlerPosition, playerT.position - crawlerPosition, distanceToPlayer);
-			Debug.DrawRay (crawlerPosition, playerT.position - crawlerPosition, Color.blue);
+		} else if(distanceToPlayer < 45)
+        {
+			RaycastHit[] rayHits = Physics.RaycastAll (crawlerPosition, Utilities.playerCharacter.transform.position - crawlerPosition, distanceToPlayer);
+			Debug.DrawRay (crawlerPosition, Utilities.playerCharacter.transform.position - crawlerPosition, Color.blue);
 			foreach (RaycastHit hit in rayHits) {            
 				if (hit.transform.tag != "Player") {
 					return false;
@@ -84,8 +84,8 @@ public class MoveCrawler : MonoBehaviour {
 
 	//Taken from Peter and Zach's FPS project
 	private bool IsInFOV(Vector3 crawlerPosition){
-		Vector3 directionToPlayer = playerT.position - crawlerPosition;  //Direction to player
-		Debug.DrawLine(crawlerPosition, playerT.position, Color.magenta); //draws a line to the player from the enemy
+		Vector3 directionToPlayer = Utilities.playerCharacter.transform.position - crawlerPosition;  //Direction to player
+		Debug.DrawLine(crawlerPosition, Utilities.playerCharacter.transform.position, Color.magenta); //draws a line to the player from the enemy
 
 		Vector3 lineOfSight = this.transform.forward; // the center of the enemy's field of view
 		Debug.DrawLine(crawlerPosition, crawler.transform.forward, Color.yellow); // draws line to represent center of FOV
