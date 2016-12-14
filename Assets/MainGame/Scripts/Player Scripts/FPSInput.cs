@@ -11,13 +11,14 @@ public class FPSInput : MonoBehaviour
     public float speed = 6.0f;
     public float crouchSpeed = 3.0f;
     public float gravity = -6f;
-    public float jumpSpeed = 200f;
+    public float jumpSpeed = 5f;
     public float standingHeightSameAsStartScaleYInEditor = 0.6f;
     public float crouchHeight = 0.3f;
     
     private GameObject character;
     private CharacterController characterController;
     private float jumpSmoothness = .2f;
+    float vertSpeed = 0;
     private float crouchSmoothness = .2f;
     public bool crouching = false;
     private bool jumpCompleted = true;
@@ -29,13 +30,11 @@ public class FPSInput : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         character = this.gameObject;
     }
-
     // Calculates player's movement
     void Update()
     {
         float deltaX = PlayerSpeed(Input.GetAxis("Horizontal"));
         float deltaZ = PlayerSpeed(Input.GetAxis("Vertical"));
-        float vertSpeed = 0;
 
         vertSpeed = Jump(vertSpeed);
         Crouch();
@@ -100,7 +99,7 @@ public class FPSInput : MonoBehaviour
         }
         else
         {
-            vertSpeed += gravity;
+            vertSpeed += gravity * Time.deltaTime;
         }
         return vertSpeed;
     }
