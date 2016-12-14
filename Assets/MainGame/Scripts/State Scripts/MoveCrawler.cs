@@ -18,11 +18,6 @@ public class MoveCrawler : MonoBehaviour {
 	// The crawler's animation
 	private RuntimeAnimatorController controller;
 
-	//private LineRenderer laser;
-	private RaycastHit aHit;
-	private const int SIGHT_LENGTH = 70;
-    private const float radiusRange = 10f;
-
     // State pattern
     //private bool isSeen;
     private State currentState;
@@ -33,7 +28,13 @@ public class MoveCrawler : MonoBehaviour {
 	private State attackState;
 
 	// Sets the FOV sensitivity
-	private int angleDetect = 65;
+	private const int angleDetect = 65;
+
+	// Sets distance crawler hears the player
+	private const int soundDetect = 15;
+
+	// Sets distance crawler can see the player
+	private const int sightDetect = 45;
 
 	// Use this for initialization
 	void Start () {
@@ -64,9 +65,9 @@ public class MoveCrawler : MonoBehaviour {
 	private bool IsInLOS(){
 		Vector3 crawlerPosition = new Vector3 (crawler.transform.position.x,crawler.transform.position.y + 3f, crawler.transform.position.z);
 		float distanceToPlayer = Vector3.Distance(crawlerPosition, Utilities.playerCharacter.transform.position);
-		if (distanceToPlayer < 15) {
+		if (distanceToPlayer < soundDetect) {
 			return true;
-		} else if(distanceToPlayer < 45)
+		} else if(distanceToPlayer < sightDetect)
         {
 			RaycastHit[] rayHits = Physics.RaycastAll (crawlerPosition, Utilities.playerCharacter.transform.position - crawlerPosition, distanceToPlayer);
 			Debug.DrawRay (crawlerPosition, Utilities.playerCharacter.transform.position - crawlerPosition, Color.blue);
