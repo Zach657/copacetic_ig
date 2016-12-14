@@ -7,6 +7,7 @@ using System.Collections;
 /** 
  * Copyright (C) 2016 - Peter Wages
  **/
+ // Utility script to hold static variables to be accessed game-wide to reduce the need for linking and multiple references to the same variable
  [RequireComponent(typeof(SceneController))]
 public class Utilities: MonoBehaviour {
     // Player pref keys

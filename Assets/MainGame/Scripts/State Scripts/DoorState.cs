@@ -2,7 +2,9 @@
 using UnityEngine;
 using System.Collections;
 
-// Nathan Pool
+/**
+ * @author Nathan Pool
+ */
 public interface DoorState {
 	
 	void MoveDoor ();

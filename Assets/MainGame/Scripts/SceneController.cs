@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -17,6 +17,7 @@ public class SceneController: MonoBehaviour {
 
 	private List<string> brainJarMemories = new List<string>();
 
+    // Sets the current scene, saves the game, reset player alive and brains collected for reloading purposes, adds memories to list
     void Start()
     {
         // At the start of each scene, save the checkpoint

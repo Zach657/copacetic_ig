@@ -4,6 +4,8 @@ using System.Collections;
 /** 
  * Copyright (C) 2016 - James Greenwell
  **/
+
+    //Mimics the player's voice and plays it back to them
 public class PlayerMimic : MonoBehaviour {
 	private AudioSource audioSource;
 	private const int MICDELAY = 500;

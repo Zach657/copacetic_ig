@@ -22,6 +22,7 @@ public class TriggerHospitalCompletion : MonoBehaviour {
     private float waitForNotificationFade = 1f;
     // Peter Wages
 
+        // Resets the index and win sequence started, for reloading purposes. Calculates audio delay for winning sound
     void Start()
     {
         // Peter Wages
@@ -38,7 +39,7 @@ public class TriggerHospitalCompletion : MonoBehaviour {
     // Nathan Pool
     // Checks if the player is in range of the ending wake up body object
     void Update () {
-		if (Vector3.Distance (yourBody.transform.position, Utilities.playerCharacter.transform.position) <= Utilities.minmumDistance)
+		if (SceneController.playerIsNear(yourBody))
         {
             if (!winSequenceStarted)
             {
@@ -66,7 +67,6 @@ public class TriggerHospitalCompletion : MonoBehaviour {
             // Nathan Pool
             AudioSource.PlayClipAtPoint(winClip, Utilities.playerCharacter.transform.position);
             // Nathan Pool
-            // -1 from delay to allow notification to fade out
             yield return new WaitForSeconds(Utilities.NOTIFICATIONDURATION - (audioDelay - waitForNotificationFade));
             SceneController.TriggerWin();
         }

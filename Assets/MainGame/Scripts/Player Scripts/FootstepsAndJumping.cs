@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /** 
- * Copyright (C) 2016 - Peter Wages & Unity
+ * Copyright (C) 2016 - Peter Wages & Unity - Third Person Character
  **/
 
     public class FootstepsAndJumping : MonoBehaviour
@@ -29,6 +29,7 @@ using UnityEngine;
         private FPSInput input;
     // End Peter Wages
 
+        //Gets needed components
     void Start()
         {
             audioSource = GetComponent<AudioSource>();
@@ -37,6 +38,7 @@ using UnityEngine;
         }
 
         // Peter Wages
+        // Calculates when to change footstep speed
         private void Update()
         {
             isGrounded = playerController.isGrounded;
@@ -48,27 +50,28 @@ using UnityEngine;
             }
             if (!isGrounded && input.playJumpSound)
             {
-                PlayJumpSound();
+            SceneController.PlaySoundAtPoint(jumpSound, Utilities.playerCharacter.transform.position);
                 input.playJumpSound = false;
                 playLandingSound = true;
             }
             else if (isGrounded && playLandingSound)
             {
-                PlayLandingSound();
-                playLandingSound = false;
+            SceneController.PlaySoundAtPoint(landSound, Utilities.playerCharacter.transform.position);
+            playLandingSound = false;
             }
         }
 
+    // Detects if player is walking and needs to change speed
         private void FixedUpdate()
         { 
-            if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && (!stepsPlaying && !footstepsSpeedChange))
+            if (PlayerWalking() && (!stepsPlaying && !footstepsSpeedChange))
             {
                 if (crouching) stepInterval = crouchingStepInterval;
                 else stepInterval = runningStepInterval;
                 InvokeRepeating("PlayFootStepAudio", 0f, stepInterval);
                 stepsPlaying = true;
             }
-            else if ((!(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) && stepsPlaying) || (footstepsSpeedChange && stepsPlaying))
+            else if (!(PlayerWalking() && stepsPlaying) || (footstepsSpeedChange && stepsPlaying))
             {
                 CancelInvoke("PlayFootStepAudio");
                 stepsPlaying = false;
@@ -77,18 +80,7 @@ using UnityEngine;
         }
         // Peter Wages
 
-        private void PlayJumpSound()
-        {
-            audioSource.clip = jumpSound;
-            audioSource.Play();
-        }
-
-        private void PlayLandingSound()
-        {
-            audioSource.clip = landSound;
-            audioSource.Play();
-        }
-
+    // Plays footstep sounds
         private void PlayFootStepAudio()
         {
             if (!isGrounded)
@@ -104,4 +96,10 @@ using UnityEngine;
             footstepSounds[n] = footstepSounds[0];
             footstepSounds[0] = audioSource.clip;
         }
+
+    // Checks if player is walking
+    private bool PlayerWalking()
+    {
+        return ((Input.GetAxis("Horizontal") > 0 || (Input.GetAxis("Vertical") > 0)));
+    }
     }

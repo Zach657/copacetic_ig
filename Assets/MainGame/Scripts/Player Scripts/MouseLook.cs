@@ -7,12 +7,14 @@ using System.Collections;
 
 public class MouseLook : MonoBehaviour {
 
+    // Sets cursor to be confined to screen and invisible
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
     }
     
+    // Rotational axes
     public enum RotationAxes
     {
         MouseXandY = 0,
@@ -52,6 +54,7 @@ public class MouseLook : MonoBehaviour {
         transform.localEulerAngles = new Vector3(xRot, yRot, 0);
     }
 
+    // Calculates X rotation
     public float getXRot()
     {
         float newX = rotationX - Input.GetAxis("Mouse Y") * sensitivityVert;
@@ -60,6 +63,7 @@ public class MouseLook : MonoBehaviour {
         return newX;
     }
 
+    // Calculates Y rotation
     public float getYRot()
     {
         float newY = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityHor;

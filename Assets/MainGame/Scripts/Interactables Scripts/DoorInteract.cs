@@ -27,6 +27,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
 
 	private DoorState currentState;
     
+    // Sets the starting state and current angle
     void Start(){
         isMoving = false;
         if(!isLocked){
@@ -45,6 +46,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
         
     }
     
+    // Constantly checks if player is nearby and attempting to open the door
     void FixedUpdate(){
         if (SceneController.playerIsNear(this.gameObject) && Input.GetKeyDown("e") && !isMoving)
         {
@@ -81,6 +83,7 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     }
     // Peter Wages
 
+        // Toggles the door from open to close and plays the audio clip
     public void ToggleDoor(float angle, AudioClip clip, bool toggle)
     {
         isMoving = true;
@@ -90,12 +93,14 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     }
 
 	// Nathan Pool
+    // State for when locked
 	class LockedState : DoorState {
 		DoorInteract interaction;
 		public LockedState(DoorInteract interaction) {
 			this.interaction = interaction;
 		}
 
+        // Since locked, open the numpad to solve puzzle and unlock door
 		public void MoveDoor() {
 			Utilities.sceneController.PauseGame(Utilities.numpadObject);
 			Utilities.numpadController.thisUnlockable = interaction.gameObject;
@@ -104,12 +109,14 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
 	}
 
 	//Nathan Pool
+    // Unlocked state
 	class UnlockedState : DoorState {
 		DoorInteract interaction;
 		public UnlockedState(DoorInteract interaction) {
 			this.interaction = interaction;
 		}
 
+        // Toggles the door
 		public void MoveDoor() {
 			if (interaction.isOpen)
 			{

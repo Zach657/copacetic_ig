@@ -7,7 +7,7 @@ using System;
 /** 
  * Copyright (C) 2016 - Peter Wages
  **/
-
+ // Controls the numpad and its entry 
 public class NumpadEntryController : MonoBehaviour {
     [SerializeField]
     private AudioClip incorrectAnser;

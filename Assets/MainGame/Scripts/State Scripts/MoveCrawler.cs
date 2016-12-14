@@ -3,7 +3,6 @@ using System.Collections;
 
 /**
  * @author Nathan Pool
- * 
  */
 
 // https://docs.unity3d.com/ScriptReference/Animator.html

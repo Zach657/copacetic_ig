@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * @author Nathan Pool
+ */
 public class CrawlState : MonoBehaviour, State {
 	MoveCrawler moveCrawler;
 	Animator animator;

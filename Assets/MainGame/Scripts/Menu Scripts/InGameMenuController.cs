@@ -8,9 +8,8 @@
 [RequireComponent(typeof(CompassContoller))]
 public class InGameMenuController : MenuController
 {
-    // Update is called once per frame
+    // check for attempts to open / close in-game menu on escape press
     private void Update () {
-        // check for attempts to open / close in-game menu on escape press
         SceneController.ToggleMenuOnButtonPress(KeyCode.Escape, null);
     }
 }

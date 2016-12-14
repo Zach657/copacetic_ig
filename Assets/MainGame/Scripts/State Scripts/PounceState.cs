@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/**
+ * @author Nathan Pool
+ */
 public class PounceState : State {
 	MoveCrawler moveCrawler;
 	Animator animator;

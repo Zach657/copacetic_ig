@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/** 
+ * Copyright (C) 2016 - Peter Wages
+ **/
 public class MinimapController : MonoBehaviour {
 
-    // Update is called once per frame
+    // check for attempts to open / close minimap on m button press
     private void Update()
     {
-        // check for attempts to open / close minimap on m button press
         SceneController.ToggleMenuOnButtonPress(KeyCode.M, Utilities.minimap);
     }
 }

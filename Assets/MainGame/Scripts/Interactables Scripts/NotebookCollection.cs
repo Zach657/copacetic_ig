@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class NotebookCollection : MonoBehaviour {
 
+    // Unlocks the notebook in the inventory
 	public void unlockNotebook(int id){
 	    Component notebookObject = this.gameObject.GetComponent ("Notebook" + id);
         notebookObject.GetComponent<Button>().enabled = true;

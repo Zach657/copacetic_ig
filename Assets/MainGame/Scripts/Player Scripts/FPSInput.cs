@@ -18,7 +18,7 @@ public class FPSInput : MonoBehaviour
     private GameObject character;
     private CharacterController characterController;
     private float jumpSmoothness = .2f;
-    private float crouchSmoothness = .1f;
+    private float crouchSmoothness = .2f;
     public bool crouching = false;
     private bool jumpCompleted = true;
     public bool playJumpSound;
@@ -64,7 +64,7 @@ public class FPSInput : MonoBehaviour
     // Checks if player is crouching
     private void Crouch()
     {
-        if ((Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift)) && characterController.isGrounded)
+        if (Input.GetKey(KeyCode.C) || Input.GetKey(KeyCode.LeftShift))
         {
             crouching = true;
             ScaleForCrouching(crouchHeight);
