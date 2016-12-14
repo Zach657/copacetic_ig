@@ -17,6 +17,8 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     //used to track the current angle of the door (handles issues with door rotation)
     private float currentAngle;
 
+	private const int doorAngleSensitivity = 4;
+
     //boolean for whether or not the door is open
     [SerializeField] private bool isOpen;
     // Peter Wages
@@ -60,16 +62,16 @@ public class DoorInteract : MonoBehaviour, UnlockableObject {
     
     //moves the door towards the desired angle in increments
     private void MoveDoor(float angle){
-        if(Mathf.Abs(currentAngle-angle) < 4){
+		if(Mathf.Abs(currentAngle-angle) < doorAngleSensitivity){
             isMoving = false;
         }
         else if(angle < currentAngle){
-            this.transform.Rotate(0,-4,0);
-            currentAngle = currentAngle - 4;
+			this.transform.Rotate(0,-doorAngleSensitivity,0);
+			currentAngle = currentAngle - doorAngleSensitivity;
         }
         else{
-            this.transform.Rotate(0,4,0);
-            currentAngle = currentAngle + 4;
+			this.transform.Rotate(0,doorAngleSensitivity,0);
+			currentAngle = currentAngle + doorAngleSensitivity;
         }
     }
 
