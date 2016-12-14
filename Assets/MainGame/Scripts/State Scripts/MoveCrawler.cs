@@ -3,6 +3,7 @@ using System.Collections;
 
 /**
  * @author Nathan Pool
+ * Copyright (c) Nathan Pool 2016
  */
 
 // https://docs.unity3d.com/ScriptReference/Animator.html
@@ -37,17 +38,18 @@ public class MoveCrawler : MonoBehaviour {
 	private const int sightDetect = 45;
 
 	// Use this for initialization
+	// by Nathan Pool
 	void Start () {
 		timeWalked += Time.deltaTime;
 		crawler = this.gameObject;
 
 		// State pattern
-		//isSeen = false;
 		currentState = new CrawlState(this);
 
 	}
 
 	// Update is called once per frame
+	// by Nathan Pool
 	void Update () {
 		// After State pattern
 		PerformAction();
@@ -101,38 +103,47 @@ public class MoveCrawler : MonoBehaviour {
 		}
 	}
 
+	// by Nathan Pool
 	public void PerformAction() {
 		currentState.PerformAction();
 	}
 
+	// by Nathan Pool
 	public GameObject GetCrawler() {
 		return crawler;
 	}
 
+	// by Nathan Pool
 	public State GetIdleState() {
 		return new IdleState (this);
 	}
 
+	// by Nathan Pool
 	public State GetCrawlState() {
 		return new CrawlState (this);
 	}
 
+	// by Nathan Pool
 	public State GetCrawlFastState() {
 		return new CrawlFastState (this);
 	}
 
+	// by Nathan Pool
 	public State GetAttackState() {
 		return new AttackState (this);
 	}
 
+	// by Nathan Pool
 	public State GetPounceState() {
 		return new PounceState (this);
 	}
 
+	// by Nathan Pool
 	public State GetState() {
 		return currentState;
 	}
 
+	// by Nathan Pool
 	public void SetState(State newState) {
 		currentState = newState;
 	}

@@ -2,6 +2,7 @@
 using System.Collections;
 /**
  * @author Nathan Pool
+ * Copyright (c) Nathan Pool 2016
  */
 public class CrawlFastState : MonoBehaviour, State {
 	MoveCrawler moveCrawler;
@@ -11,6 +12,7 @@ public class CrawlFastState : MonoBehaviour, State {
 	Ray crawlerSight;
 
 	// Only crawls fast when chasing player
+	// Nathan Pool
 	public CrawlFastState(MoveCrawler moveCrawler) {
 		this.moveCrawler = moveCrawler;
 		crawler = moveCrawler.gameObject;
@@ -23,10 +25,8 @@ public class CrawlFastState : MonoBehaviour, State {
 
 	}
 
-	public void PlayerClose() {
-
-	}
-
+	// Performs action with respect to state crawler is in
+	// by Nathan Pool
 	public void PerformAction() {
 		Vector3 targetPosition = player.transform.position;
 		targetPosition.y = crawler.transform.position.y;

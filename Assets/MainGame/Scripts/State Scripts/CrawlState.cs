@@ -3,6 +3,7 @@ using System.Collections;
 
 /**
  * @author Nathan Pool
+ * Copyright (c) Nathan Pool 2016
  */
 public class CrawlState : MonoBehaviour, State {
 	MoveCrawler moveCrawler;
@@ -11,6 +12,7 @@ public class CrawlState : MonoBehaviour, State {
 	GameObject theCrawler;
 	GameObject player;
 
+	// by Nathan Pool
 	public CrawlState (MoveCrawler moveCrawler) {
 		this.moveCrawler = moveCrawler;
 		crawler = moveCrawler.gameObject;
@@ -19,6 +21,8 @@ public class CrawlState : MonoBehaviour, State {
 
 	}
 
+	// If the player is seen, the state is set to CrawlFast
+	// by Nathan Pool
 	public void PlayerSeen(bool isSeen) {
 		moveCrawler.SetState (moveCrawler.GetCrawlFastState());
 
@@ -28,9 +32,8 @@ public class CrawlState : MonoBehaviour, State {
 		}
 	}
 
-	public void PlayerClose() {
-	}
-
+	// Performs action with respect to state crawler is in
+	// by Nathan Pool
 	public void PerformAction() {
 		crawler.transform.Rotate (12 * Time.deltaTime, 0, 0);
 		crawler.transform.position += crawler.transform.forward * 3 * Time.deltaTime;
