@@ -3,6 +3,7 @@
 ## Instructions:
 * Asylum scene: Find your way to the exit, complete the puzzle to continue
 * Forest scene: Collect all of the brain jars to complete this scene. Keep an eye out for notebook hints for the puzzle in this scene.
+* Hospital scene: Find yourself to win the game.
 * You may notice you are disoriented, this is normal
 * Avoid the darkness
 * Avoid crawlers and scarecrows
