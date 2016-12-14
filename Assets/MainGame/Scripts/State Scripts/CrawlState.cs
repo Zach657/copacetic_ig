@@ -6,14 +6,18 @@ using System.Collections;
  * Copyright (c) Nathan Pool 2016
  */
 public class CrawlState : MonoBehaviour, State {
-	MoveCrawler moveCrawler;
-	Animator animator;
-	GameObject crawler;
-	GameObject theCrawler;
-	GameObject player;
+    private MoveCrawler moveCrawler;
+    private Animator animator;
+    private GameObject crawler;
+    private GameObject theCrawler;
+    private GameObject player;
 
-	// by Nathan Pool
-	public CrawlState (MoveCrawler moveCrawler) {
+    private int rotate = 12;
+    private int speed = 3;
+    private int distance = 1;
+
+    // by Nathan Pool
+    public CrawlState (MoveCrawler moveCrawler) {
 		this.moveCrawler = moveCrawler;
 		crawler = moveCrawler.gameObject;
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -21,22 +25,11 @@ public class CrawlState : MonoBehaviour, State {
 
 	}
 
-	// If the player is seen, the state is set to CrawlFast
-	// by Nathan Pool
-	public void PlayerSeen(bool isSeen) {
-		moveCrawler.SetState (moveCrawler.GetCrawlFastState());
-
-		//https://docs.unity3d.com/ScriptReference/Vector3.Distance.html
-		if (Vector3.Distance(crawler.transform.position, player.transform.position) < 1) {
-			moveCrawler.SetState(moveCrawler.GetAttackState());
-		}
-	}
-
 	// Performs action with respect to state crawler is in
 	// by Nathan Pool
 	public void PerformAction() {
-		crawler.transform.Rotate (12 * Time.deltaTime, 0, 0);
-		crawler.transform.position += crawler.transform.forward * 3 * Time.deltaTime;
+		crawler.transform.Rotate (rotate * Time.deltaTime, 0, 0);
+		crawler.transform.position += crawler.transform.forward * speed * Time.deltaTime;
 		animator.Play ("crawl");
 	}
 

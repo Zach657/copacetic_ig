@@ -8,6 +8,7 @@ using System.Collections;
  */
 public interface DoorState {
 	
+    // How to move the door
 	void MoveDoor ();
 
 }

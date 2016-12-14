@@ -16,15 +16,6 @@ public class PounceState : State {
 		animator = crawler.GetComponent<Animator> ();
 	}
 
-	public void PlayerSeen(bool isSeen) {
-		
-	}
-
-	public void PlayerClose() {
-//		animator.Play ("attack");
-//		moveCrawler.SetState (moveCrawler.GetIdleState ());
-	}
-
 	// by Nathan Pool
 	// the crawler pounces
 	public void PerformAction() {

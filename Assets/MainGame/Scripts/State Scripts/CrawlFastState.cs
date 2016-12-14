@@ -5,25 +5,25 @@ using System.Collections;
  * Copyright (c) Nathan Pool 2016
  */
 public class CrawlFastState : MonoBehaviour, State {
-	MoveCrawler moveCrawler;
-	Animator animator;
-	GameObject crawler;
-	GameObject player;
-	Ray crawlerSight;
+	private MoveCrawler moveCrawler;
+    private Animator animator;
+    private GameObject crawler;
+    private GameObject player;
+    private Ray crawlerSight;
 
-	// Only crawls fast when chasing player
-	// Nathan Pool
-	public CrawlFastState(MoveCrawler moveCrawler) {
-		this.moveCrawler = moveCrawler;
-		crawler = moveCrawler.gameObject;
-		player = GameObject.FindGameObjectWithTag ("Player");
-		animator = crawler.GetComponent<Animator> ();
+    private int speed = 7;
+    private int distance = 3;
 
-	}
+    // Only crawls fast when chasing player
+    // Nathan Pool
+    public CrawlFastState(MoveCrawler moveCrawler)
+    {
+        this.moveCrawler = moveCrawler;
+        crawler = moveCrawler.gameObject;
+        player = GameObject.FindGameObjectWithTag("Player");
+        animator = crawler.GetComponent<Animator>();
 
-	public void PlayerSeen(bool isSeen) {
-
-	}
+    }
 
 	// Performs action with respect to state crawler is in
 	// by Nathan Pool
@@ -34,11 +34,11 @@ public class CrawlFastState : MonoBehaviour, State {
 		Vector3 targetAngle = crawler.transform.localEulerAngles;
 		targetAngle.z += 90f;
 		crawler.transform.localEulerAngles = targetAngle;
-		crawler.transform.position += crawler.transform.forward * 7 * Time.deltaTime;
+		crawler.transform.position += crawler.transform.forward * speed * Time.deltaTime;
 		animator.Play ("crawl_fast");
 
 		//https://docs.unity3d.com/ScriptReference/Vector3.Distance.html
-		if (Vector3.Distance(crawler.transform.position, player.transform.position) < 3) {
+		if (Vector3.Distance(crawler.transform.position, player.transform.position) < distance) {
 			moveCrawler.SetState(moveCrawler.GetAttackState());
 		}
 	}

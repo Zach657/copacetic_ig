@@ -16,10 +16,6 @@ public class AttackState : MonoBehaviour, State {
 		crawler = moveCrawler.gameObject;
 		animator = crawler.GetComponent<Animator> ();
 	}
-
-	public void PlayerSeen(bool isSeen) {
-
-	}
 		
 	// Performs action with respect to state crawler is in
 	// by Nathan Pool

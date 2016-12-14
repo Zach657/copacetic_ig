@@ -20,7 +20,6 @@ public class MoveCrawler : MonoBehaviour {
 	private RuntimeAnimatorController controller;
 
     // State pattern
-    //private bool isSeen;
     private State currentState;
 	private State idleState;
 	private State crawlState;
@@ -37,7 +36,10 @@ public class MoveCrawler : MonoBehaviour {
 	// Sets distance crawler can see the player
 	private const int sightDetect = 45;
 
-	// Use this for initialization
+    // Crawler is weird and needs its position set different than it is
+    private const float yAdjustment = 3f;
+
+	// Sets the default state to roam the scene
 	// by Nathan Pool
 	void Start () {
 		timeWalked += Time.deltaTime;
@@ -64,8 +66,9 @@ public class MoveCrawler : MonoBehaviour {
 	}
 
 	//Taken from Peter and Zach's FPS project
+    // Detects if player is in length of sight
 	private bool IsInLOS(){
-		Vector3 crawlerPosition = new Vector3 (crawler.transform.position.x,crawler.transform.position.y + 3f, crawler.transform.position.z);
+		Vector3 crawlerPosition = new Vector3 (crawler.transform.position.x,crawler.transform.position.y + yAdjustment, crawler.transform.position.z);
 		float distanceToPlayer = Vector3.Distance(crawlerPosition, Utilities.playerCharacter.transform.position);
 		if (distanceToPlayer < soundDetect) {
 			return true;
@@ -85,6 +88,7 @@ public class MoveCrawler : MonoBehaviour {
 	}
 
 	//Taken from Peter and Zach's FPS project
+    // Detects if player is in field of view
 	private bool IsInFOV(Vector3 crawlerPosition){
 		Vector3 directionToPlayer = Utilities.playerCharacter.transform.position - crawlerPosition;  //Direction to player
 		Debug.DrawLine(crawlerPosition, Utilities.playerCharacter.transform.position, Color.magenta); //draws a line to the player from the enemy
@@ -104,46 +108,55 @@ public class MoveCrawler : MonoBehaviour {
 	}
 
 	// by Nathan Pool
+    // Calls the states action to perform
 	public void PerformAction() {
 		currentState.PerformAction();
 	}
 
 	// by Nathan Pool
+    // Returns the crawler game object
 	public GameObject GetCrawler() {
 		return crawler;
 	}
 
 	// by Nathan Pool
+    // Gets idle state
 	public State GetIdleState() {
 		return new IdleState (this);
 	}
 
 	// by Nathan Pool
+    // Gets crawl state
 	public State GetCrawlState() {
 		return new CrawlState (this);
 	}
 
 	// by Nathan Pool
+    // Gets crawl fast state
 	public State GetCrawlFastState() {
 		return new CrawlFastState (this);
 	}
 
 	// by Nathan Pool
+    // Gets attack state
 	public State GetAttackState() {
 		return new AttackState (this);
 	}
 
 	// by Nathan Pool
+    // Gets pounce state
 	public State GetPounceState() {
 		return new PounceState (this);
 	}
 
 	// by Nathan Pool
+    // Gets state
 	public State GetState() {
 		return currentState;
 	}
 
 	// by Nathan Pool
+    // Sets state
 	public void SetState(State newState) {
 		currentState = newState;
 	}

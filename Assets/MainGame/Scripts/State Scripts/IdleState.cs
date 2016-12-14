@@ -5,10 +5,11 @@
  * Copyright (c) Nathan Pool 2016
  */
 public class IdleState : MonoBehaviour, State {
-	MoveCrawler moveCrawler;
-	Animator animator;
-	GameObject crawler;
-	GameObject player;
+    private MoveCrawler moveCrawler;
+    private Animator animator;
+    private GameObject crawler;
+    private GameObject player;
+    private int distance = 1;
 
 	// by Nathan Pool
 	public IdleState (MoveCrawler moveCrawler) {
@@ -25,13 +26,9 @@ public class IdleState : MonoBehaviour, State {
 		moveCrawler.SetState (moveCrawler.GetCrawlFastState ());
 
 		//https://docs.unity3d.com/ScriptReference/Vector3.Distance.html
-		if (Vector3.Distance(crawler.transform.position, player.transform.position) < 1) {
+		if (Vector3.Distance(crawler.transform.position, player.transform.position) < distance) {
 			moveCrawler.SetState(moveCrawler.GetAttackState());
 		}
-	}
-
-	public void PlayerClose() {
-		//		animator.Play ("attack");
 	}
 
 	// the crawler does nothing
